@@ -1,0 +1,16 @@
+datetime
+Django
+psycopg2
+pandas
+werkzeug
+django-twitter-bootstrap==3.3.0
+numpy
+docopt
+scipy>=0.17.0
+scikit-learn>=0.17
+matplotlib>=1.5.1
+jupyter>=1.0.0
+tilestache
+utils
+pyproj
+shapely
