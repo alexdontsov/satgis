@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     'django.contrib.flatpages',
     'django.contrib.gis',
     'geoview',
+    'app',
+    'app.shapeEditor',
 ]
 
 MIDDLEWARE_CLASSES = [
