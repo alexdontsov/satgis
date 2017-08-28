@@ -14,3 +14,21 @@ class Attribute(models.Model):
     type = models.IntegerField()
     width = models.IntegerField()
     precision = models.IntegerField()
+
+class Feature(models.Model):
+    shapefile =models.ForeignKey(Shapefile)
+    geom_point = models.PointField(srid=4326, blank=True, null=True)
+    geom_multipoint =models.MultiPointField(srid=4326, blank=True, null=True)
+    geom_multilinestring = models.MultiLineStringField(srid=4326, blank=True, null=True)
+    geom_multilipolygon = models.MultiPolygonField(srid=4326, blank=True, null=True)
+    geom_geometrycolletion = models.GeometryCollectionField(srid=4326, blank=True, null=True)
+
+    objects = models.GeoManager()
+
+class AttributeValue(models.Model):
+    feature = models.ForeignKey(Feature)
+    attribute = models.ForeignKey(Attribute)
+    value = models.CharField(max_length=255, blank=True, null=True)
+
+
+
