@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'geoview',
     'app',
     'app.shapeEditor',
+    'app.shapefiles',
 ]
 
 MIDDLEWARE_CLASSES = [

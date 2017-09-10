@@ -8,12 +8,18 @@ class Shapefile(models.Model):
     srs_wkt = models.CharField(max_length=255)
     geom_type = models.CharField(max_length=255)
 
+    def __str__(self):
+        return self.filename
+
 class Attribute(models.Model):
     shapefile = models.ForeignKey(Shapefile)
     name = models.CharField(max_length=255)
     type = models.IntegerField()
     width = models.IntegerField()
     precision = models.IntegerField()
+
+    def __str__(self):
+        return self.name
 
 class Feature(models.Model):
     shapefile =models.ForeignKey(Shapefile)
@@ -25,10 +31,17 @@ class Feature(models.Model):
 
     objects = models.GeoManager()
 
+    def __str__(self):
+        return str(self.id)
+
 class AttributeValue(models.Model):
     feature = models.ForeignKey(Feature)
     attribute = models.ForeignKey(Attribute)
     value = models.CharField(max_length=255, blank=True, null=True)
+
+    def __str__(self):
+        return self.value
+
 
 
 
