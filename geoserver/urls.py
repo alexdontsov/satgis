@@ -18,10 +18,14 @@ from django.conf.urls import url
 from django.contrib import admin
 from django.contrib.flatpages import views
 
+from app import shapefiles
+from app.shapefiles.views import list_shapefiles
 
 urlpatterns = [
     url(r'^', include('geoview.urls')),
     # url(r'^v1/tiles/(?P<tile_user>([^/]+))/(?P<tile_layer>([^/]+))/(?P<tile_zoom>(\d+))/(?P<tile_column>(\d+))/(?P<tile_row>(\d+))\.(?P<tile_format>([a-z]+))$', TileManager.as_view(), name='tile_manager'),
     url(r'^admin/', admin.site.urls),
     url(r'^pages/', include('django.contrib.flatpages.urls')),
+    url(r'^shape-files', list_shapefiles),
+    url(r'^import', shapefiles.views.import_shapefile),
 ]
