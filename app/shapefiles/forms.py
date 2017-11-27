@@ -2,4 +2,4 @@
 from django import forms
 
 class ImportShapefileForm(forms.Form):
-    import_file = forms.FileField(label="Bbi6epHTe сжатый файл фигур")
+    import_file = forms.FileField(label="Bыберите сжатый файл фигур")
