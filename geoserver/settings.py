@@ -47,6 +47,8 @@ INSTALLED_APPS = [
     'app',
     'app.shapeEditor',
     'app.shapefiles',
+    'app.tms',
+
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -89,8 +91,8 @@ DATABASES = {
      'default': {
           'ENGINE': 'django.contrib.gis.db.backends.postgis',
           'NAME': 'gisdata',
-          'USER': 'diver',
-          'PASSWORD': '123qwe',
+          'USER': 'root',
+          'PASSWORD': '123',
           'HOST': 'localhost',
           'PORT': '',
      },

@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 
 from django.contrib.gis import admin
-from models import *
+from .models import  *
 
 admin.site.register(Shapefile, admin.ModelAdmin)
 admin.site.register(Feature, admin.GeoModelAdmin)

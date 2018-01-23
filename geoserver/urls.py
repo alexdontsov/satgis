@@ -19,6 +19,7 @@ from django.contrib import admin
 from django.contrib.flatpages import views
 
 from app import shapefiles
+from app import tms
 from app.shapefiles.views import list_shapefiles
 
 urlpatterns = [
@@ -28,4 +29,7 @@ urlpatterns = [
     url(r'^pages/', include('django.contrib.flatpages.urls')),
     url(r'^shape-files', list_shapefiles),
     url(r'^import', shapefiles.views.import_shapefile),
+    url(r'^export/(?P<shapefile_id>\d+)$',
+            shapefiles.views.export_shapefile),
+    url(r'^tms/', tms.urls),
 ]

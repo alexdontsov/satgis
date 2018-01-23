@@ -24,7 +24,7 @@ def calc_geometry_field(geometry_type):
     elif geometry_type == "Point":
         return "geom_multipoint"
     else:
-        return "geom_" + geometryType.lower()
+        return "geom_" + geometry_type.lower()
 
 #############################################################################
 

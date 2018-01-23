@@ -5,7 +5,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from app.shapeEditor.models import Shapefile
 from django.http import HttpResponseRedirect
-from forms import ImportShapefileForm
+from .forms import ImportShapefileForm
 from django.shortcuts import render_to_response
 import shapefileIO
 
@@ -18,8 +18,8 @@ def import_shapefile(request):
     if request.method == "GET":
         form = ImportShapefileForm()
         return render(request, "import_shapefile.html",
-                      {'form'   : form,
-                       'errMsg' : None})
+                      {'form': form,
+                       'errMsg': None})
     elif request.method == "POST":
         errMsg = None # initially.
 
@@ -32,5 +32,16 @@ def import_shapefile(request):
                 return HttpResponseRedirect("/")
 
         return render(request, "import_shapefile.html",
-                      {'form'   : form,
-                       'errMsg' : errMsg})
+                      {'form': form,
+                       'errMsg': errMsg})
+
+'''
+export data
+'''
+def export_shapefile(request, shapefile_id):
+  try:
+    shapefile = Shapefile.objects.get(id=shapefile_id)
+  except Shapefile.DoesNotExist:
+    raise Http404('File not found')
+
+  return shapefileIO.export_data(shapefile)
