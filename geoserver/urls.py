@@ -31,5 +31,5 @@ urlpatterns = [
     url(r'^import', shapefiles.views.import_shapefile),
     url(r'^export/(?P<shapefile_id>\d+)$',
             shapefiles.views.export_shapefile),
-    url(r'^tms/', tms.urls),
+    url(r'^tms/', include('app.tms.urls')),
 ]
