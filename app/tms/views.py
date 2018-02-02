@@ -194,12 +194,12 @@ def tile(request, version, shapefile_id, zoom, x, y):
         user = dbSettings['USER']
         passwd = dbSettings['PASSWORD']
         dbname = dbSettings['NAME']
-
+        
         geometry_field = utils.calc_geometry_field(shapefile.geom_type)
 
         query = '(select ' + geometry_field \
-                + ' from "shared_feature" where' \
-                + ' shapefile_id=' + str(shapefile.id) + ') as geom'
+                + 'from "shared_feature" where' \
+                + 'shapefile_id=' + str(shapefile.id) + ') as geom'
 
         symbolizer = ""
 
@@ -220,7 +220,7 @@ def tile(request, version, shapefile_id, zoom, x, y):
 
         # Настроить карту.
         gmap = mapnik.Map(TILE_WIDTH, TILE_HEIGHT)
-        mapnik.load_map_from_string(gmap, map_string)
+        mapnik.load_map_from_string(gmap, map_string.encode('utf-8'))
         # В заключение визуализировать сегмент.
         # gmap.zoom_to_box(mapnik.Envelope(minX, minY, maxX, maxY))
         gmap.zoom_to_box(mapnik.Box2d(minLong, minLat, maxLong, maxLat))
