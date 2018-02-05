@@ -250,3 +250,10 @@ pre {
 .masthead {
   height:200px;
 }
+
+.ol-popup {
+color:#000;
+line-height: 1;
+}
+
+.layer-switcher .panel { color:#000; }

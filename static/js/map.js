@@ -15,15 +15,6 @@ var conf = {
                         })
                 	},
                     {
-                        name: "Landscape",
-                        layer: {
-                            type: "tileLayer",
-                            args: [
-                                "http://{s}.tile3.opencyclemap.org/landscape/{z}/{x}/{y}.png"
-                            ]
-                        }
-                    },
-                    {
                         name: "OpenTopoMap",
                         layer: L.tileLayer('http://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
 	                            maxZoom: 17,

@@ -14,6 +14,15 @@ from django.contrib.sites.models import Site
 def index(request, template_name='index.html'):
     return render(request, template_name)
 
+def about(request, template_name='about.html'):
+    return render(request, template_name)
+
+def examples(request, template_name='examples.html'):
+    return render(request, template_name)
+
+def news(request, template_name='news.html'):
+    return render(request, template_name)
+
 # class TileManager(APIPermissionMixin, View):
 #     """
 #         Returns tiles
