@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.gis',
     'geoview',
     'app',
+    'getData',
     'app.shapeEditor',
     'app.shapefiles',
     'app.tms',
