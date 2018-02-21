@@ -32,4 +32,5 @@ urlpatterns = [
     url(r'^export/(?P<shapefile_id>\d+)$',
             shapefiles.views.export_shapefile),
     url(r'^tms/', include('app.tms.urls')),
+    url(r'^raster/', include('raster.urls')),
 ]

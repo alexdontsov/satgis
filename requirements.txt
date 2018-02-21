@@ -16,3 +16,5 @@ pyproj
 shapely
 celery
 sentinelsat
+django-wms
+django-raster

@@ -30,6 +30,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# RASTER_USE_CELERY = True
+
 
 # Application definition
 
@@ -43,6 +45,8 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.flatpages',
     'django.contrib.gis',
+    'wms',
+    'raster',
     'geoview',
     'app',
     'getData',
