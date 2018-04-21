@@ -13,3 +13,4 @@ var json_proby0 = {
 { "type": "Feature", "properties": { "id": "8", "desc": "Ленинское - Сосновка, п.б." , "value": 14.66 + ' мг/м3'}, "geometry": { "type": "Point", "coordinates": [ 82.986849678076993, 54.727518755049267 ] } }
 ]
 }
+

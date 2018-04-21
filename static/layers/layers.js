@@ -33,25 +33,31 @@ lyr_proby0.on('precompose', function(evt) {
 
 
 
+var xyz = new ol.layer.Tile({
+ opacity: 1,
+                            title: "Проверка",
+            source: new ol.source.XYZ({
+              url: '/raster/tiles/2/{z}/{x}/{y}.png'
+            })
+          });
 
 
-
-var lyr_crop0 = new ol.layer.Image({
-                            opacity: 1,
-                            title: "Sentinel-2  ",
-                            
-                            
-                            source: new ol.source.ImageStatic({
-                               url: "/static/layers/crop0.png",
-    attributions: [new ol.Attribution({html: '<a href=""></a>'})],
-                                projection: 'EPSG:3857',
-                                alwaysInRange: true,
-                                //imageSize: [5977, 7823],
-                                imageExtent: [9187051.373466, 7235021.370650, 9294060.487381, 7367369.020618]
-                            })
-                        });
-
-lyr_crop0.setVisible(true);
+//var lyr_crop0 = new ol.layer.Image({
+//                            opacity: 1,
+//                            title: "Sentinel-2  ",
+//
+//
+//                            source: new ol.source.ImageStatic({
+//                               url: "/static/layers/crop0.png",
+//    attributions: [new ol.Attribution({html: '<a href=""></a>'})],
+//                                projection: 'EPSG:3857',
+//                                alwaysInRange: true,
+//                                //imageSize: [5977, 7823],
+//                                imageExtent: [9187051.373466, 7235021.370650, 9294060.487381, 7367369.020618]
+//                            })
+//                        });
+//
+//lyr_crop0.setVisible(true);
 
 
 var lyr_NDCI0 = new ol.layer.Image({
@@ -71,4 +77,4 @@ var lyr_NDCI0 = new ol.layer.Image({
 
 lyr_NDCI0.setVisible(true);
 
-var layersList = [baseLayer,lyr_crop0, lyr_NDCI0, lyr_proby0];
+var layersList = [baseLayer,  xyz];

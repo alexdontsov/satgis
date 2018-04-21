@@ -1,3 +1,19 @@
+var geojson = {
+"type": "FeatureCollection",
+"features": [
+{ "type": "Feature", "properties": { "id": "1", "desc": "Боровое - Быстровка, л.б.", "value": 10.62 + ' мг/м3'}, "geometry": { "type": "Point", "coordinates": [ 82.65654255225229, 54.684554714785996 ] } },
+{ "type": "Feature", "properties": { "id": "2", "desc": "Боровое - Быстровка, середина", "value": 8.70 + ' мг/м3' }, "geometry": { "type": "Point", "coordinates": [ 82.701112830012292, 54.670203960687608 ] } },
+{ "type": "Feature", "properties": { "id": "3", "desc": "Боровое - Быстровка, п.б.", "value": 7.81 + ' мг/м3' }, "geometry": { "type": "Point", "coordinates": [ 82.759294390202015, 54.655848133832556 ] } },
+{ "type": "Feature", "properties": { "id": "4", "desc": "Бердский залив, Агролес", "value": 82.35 + ' мг/м3' }, "geometry": { "type": "Point", "coordinates": [ 83.133204325182646, 54.766164809822932 ] } },
+{ "type": "Feature", "properties": { "id": "5", "desc": "Бердский залив, Речкуновка" , "value": 11.78 + ' мг/м3'}, "geometry": { "type": "Point", "coordinates": [ 83.073021105812145, 54.783521380488686 ] } },
+{ "type": "Feature", "properties": { "id": "6", "desc": "Верхний бьеф (у плотины)" , "value": 16.41 + ' мг/м3'}, "geometry": { "type": "Point", "coordinates": [ 82.982145779002082, 54.844767819748363 ] } },
+{ "type": "Feature", "properties": { "id": "6", "desc": "Ленинское - Сосновка, л.б." , "value": 22.07 + ' мг/м3'}, "geometry": { "type": "Point", "coordinates": [ 82.863013696755814, 54.807581196099548 ] } },
+{ "type": "Feature", "properties": { "id": "7", "desc": "Ленинское - Сосновка, середина" , "value": 15.16 + ' мг/м3'}, "geometry": { "type": "Point", "coordinates": [ 82.919593929600836, 54.767877707240167 ] } },
+{ "type": "Feature", "properties": { "id": "8", "desc": "Ленинское - Сосновка, п.б." , "value": 14.66 + ' мг/м3'}, "geometry": { "type": "Point", "coordinates": [ 82.986849678076993, 54.727518755049267 ] } }
+]
+};
+
+
 var conf = {
     base: {
         title: 'Базовые слои',
@@ -54,46 +70,55 @@ var conf = {
         title: "#########################",
         layers: [
                 {
-                        name: "Landsat оз. Красиловское (30.07.2016)",
+                        name: "Sentinel-2, 29.08.2017",
                         layer: {
-                            type: "tileLayer",
+                            type: "tileLayer.wms",
                             args: [
-                                "/static/tiles/landsat/{z}/{x}/{y}.png", {
+                                "http://localhost/cgi-bin/mapserv?map=/var/www/html/map.map&", {
                                     maxZoom: 12,
-                                    tms:true
+                                    format: 'image/png',
+				                    transparent: true,
+                                    layers: 'test',
+                                    crs: L.CRS.EPSG4326,
+                                    version: '1.1.1',
                                 }
                             ]
                         }
                     },
-            {
-                active: false,
-                name: "Gain",
-                layer: {
-                    type: "tileLayer",
-                    args: [
-                        "http://earthengine.google.org/static/hansen_2013/gain_alpha/{z}/{x}/{y}.png", {
-                        	maxZoom: 12,
-        					attribution:
-        					'<a href="http://earthenginepartners.appspot.com/science-2013-global-forest"> '+
-        					'Tree Cover Gain (12 years, 30m, global)</a>'
+
+                 {
+                        name: "Sentinel-2, NDCI индекс, 29.08.2017",
+                        layer: {
+                            type: "tileLayer.wms",
+                            args: [
+                                "http://localhost/cgi-bin/mapserv?map=/var/www/html/map.map&", {
+                                    maxZoom: 12,
+                                    format: 'image/png',
+				                    transparent: true,
+                                    layers: 'ndci',
+                                    crs: L.CRS.EPSG4326,
+                                    version: '1.1.1',
+                                }
+                            ]
                         }
-                    ]
-                }
-            },
-            {
-                name: "Loss",
-                layer: {
-                    type: "tileLayer",
-                    args: [
-                        "http://earthengine.google.org/static/hansen_2013/loss_alpha/{z}/{x}/{y}.png", {
-                        	maxZoom: 12,
-        					attribution:
-        					'<a href="http://earthenginepartners.appspot.com/science-2013-global-forest"> '+
-        					'Tree Cover Loss (12 years, 30m, global)</a>'
-                        }
-                    ]
-                }
-            }
+                    },
+
+
+
+//            {
+//                name: "Loss",
+//                layer: {
+//                    type: "tileLayer",
+//                    args: [
+//                        "http://earthengine.google.org/static/hansen_2013/loss_alpha/{z}/{x}/{y}.png", {
+//                        	maxZoom: 12,
+//        					attribution:
+//        					'<a href="http://earthenginepartners.appspot.com/science-2013-global-forest"> '+
+//        					'Tree Cover Loss (12 years, 30m, global)</a>'
+//                        }
+//                    ]
+//                }
+//            }
         ]
     }
 };
@@ -109,6 +134,8 @@ var base1 = L.control.panelLayers(conf.base.layers, null,  {
 	position: 'topright',
 	compact: true
 }).addTo(map);
+
+
 
 var over1 = L.control.panelLayers(null, conf.tree.layers, {
     title: conf.tree.title,
@@ -132,3 +159,23 @@ map.on('zoomend', function() {
 
     console.log('zoom', map.getZoom() )
 });
+
+geojsonLayer = L.geoJson(geojson, {
+    style: function(feature) {
+        return {
+        	color: "red"
+        };
+    },
+    pointToLayer: function(feature, latlng) {
+        return new L.CircleMarker(latlng, {
+        	radius: 7,
+        	fillOpacity: 0.85
+        });
+    },
+    onEachFeature: function (feature, layer) {
+        layer.bindPopup(feature.properties.desc +'<br>' + '<b>' + feature.properties.value + '<b>');
+    }
+});
+
+map.addLayer(geojsonLayer);
+
