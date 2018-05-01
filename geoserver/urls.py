@@ -22,6 +22,10 @@ from app import shapefiles
 from app import tms
 from app.shapefiles.views import list_shapefiles
 
+admin.site.site_header = ('SibWater 1.0')
+admin.site.index_title = ('SibWater 1.0')
+admin.site.site_title = ('Admin panel')
+
 urlpatterns = [
     url(r'^', include('geoview.urls')),
     # url(r'^v1/tiles/(?P<tile_user>([^/]+))/(?P<tile_layer>([^/]+))/(?P<tile_zoom>(\d+))/(?P<tile_column>(\d+))/(?P<tile_row>(\d+))\.(?P<tile_format>([a-z]+))$', TileManager.as_view(), name='tile_manager'),

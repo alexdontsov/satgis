@@ -5,10 +5,10 @@ from django.db import models
 
 
 class WaterObject(models.Model):
-    title = models.CharField(max_length=255)
+    title = models.CharField(verbose_name='Название', max_length=255)
     lat = models.CharField(max_length=255)
     long = models.CharField(max_length=255)
     description = models.CharField(max_length=255)
 
-    def __str__(self):
-        return self.filename
+    def __unicode__(self):
+        return self.title

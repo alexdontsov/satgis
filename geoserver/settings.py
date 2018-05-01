@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'app.shapeEditor',
     'app.shapefiles',
     'app.tms',
+    'import_export',
 
 ]
 
