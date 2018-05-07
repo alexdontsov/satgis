@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load bootstrap3 %}
+<div>
+{% for art in articles %}
+    <h3><a href="/blog/{{ art.slug }}/">{{ art.title }}</a></h3>
+    <small>Автор: <ins>Михаил Попов</ins> / Дата: <ins>{{ art.add_date|date:"d.m.Y" }} </ins> в <ins>{{ art.add_date|time:"H:i" }}</ins> </small><br>
+    {{ art.text }}<br><br>
+    <a class="btn btn-default btn-xs" type="button" href="/blog/{{ art.slug }}/">Читать статью полностью...</a>
+{% endfor %}
+</div>
+{% endblock %}

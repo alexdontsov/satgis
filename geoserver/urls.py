@@ -21,6 +21,7 @@ from django.contrib.flatpages import views
 from app import shapefiles
 from app import tms
 from app.shapefiles.views import list_shapefiles
+from app.views import all_waterobjects, one_waterobject_by_slug
 
 admin.site.site_header = ('SibWater 1.0')
 admin.site.index_title = ('SibWater 1.0')
@@ -36,5 +37,7 @@ urlpatterns = [
     url(r'^export/(?P<shapefile_id>\d+)$',
             shapefiles.views.export_shapefile),
     url(r'^tms/', include('app.tms.urls')),
+    url(r'^waterobjects', all_waterobjects),
+    url(r'^(?P<slug>d+-S+)/$', one_waterobject_by_slug)
     # url(r'^raster/', include('raster.urls')),
 ]
