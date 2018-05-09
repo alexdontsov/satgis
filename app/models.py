@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from slugify import slugify
 
 
 class WaterObject(models.Model):
@@ -15,5 +16,5 @@ class WaterObject(models.Model):
         return self.title
 
     def save(self):
-        self.slug = '{0}-{1}'.format(self.pk, slugify(self.title))  # Статья будет отображаться в виде NN-АА-АААА
+        self.slug = '{0}-{1}'.format(self.pk, slugify(self.title))
         super(WaterObject, self).save()

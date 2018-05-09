@@ -103,22 +103,32 @@ var conf = {
                         }
                     },
 
+                    {
+                        name: "Sentinel-2, NDCI индекс, 29.08.2017",
+                        layer: {
+                            type: "geoJson",
+                            args: [
+                                geojson,
+                                {
+    style: function(feature) {
+        return {
+        	color: "red"
+        };
+    },
+    pointToLayer: function(feature, latlng) {
+        return new L.CircleMarker(latlng, {
+        	radius: 7,
+        	fillOpacity: 0.85
+        });
+    },
+    onEachFeature: function (feature, layer) {
+        layer.bindPopup(feature.properties.desc +'<br>' + '<b>' + feature.properties.value + '<b>');
+    }
+}
+                            ]
+                        }
+                    },
 
-
-//            {
-//                name: "Loss",
-//                layer: {
-//                    type: "tileLayer",
-//                    args: [
-//                        "http://earthengine.google.org/static/hansen_2013/loss_alpha/{z}/{x}/{y}.png", {
-//                        	maxZoom: 12,
-//        					attribution:
-//        					'<a href="http://earthenginepartners.appspot.com/science-2013-global-forest"> '+
-//        					'Tree Cover Loss (12 years, 30m, global)</a>'
-//                        }
-//                    ]
-//                }
-//            }
         ]
     }
 };
@@ -177,5 +187,5 @@ geojsonLayer = L.geoJson(geojson, {
     }
 });
 
-map.addLayer(geojsonLayer);
+//map.addLayer(geojsonLayer);
 
