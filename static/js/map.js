@@ -85,6 +85,22 @@ var conf = {
                             ]
                         }
                     },
+                    {
+                        name: "Sentinel-2, 29.08.2017",
+                        layer: {
+                            type: "tileLayer.wms",
+                            args: [
+                                "http://localhost/cgi-bin/mapserv?map=/var/www/html/map.map&", {
+                                    maxZoom: 12,
+                                    format: 'image/png',
+				                    transparent: true,
+                                    layers: 'sentinel432-2',
+                                    crs: L.CRS.EPSG4326,
+                                    version: '1.1.1',
+                                }
+                            ]
+                        }
+                    },
 
                  {
                         name: "Sentinel-2, NDCI индекс, 29.08.2017",
