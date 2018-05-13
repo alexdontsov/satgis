@@ -19,3 +19,6 @@ sentinelsat
 django-wms
 django-raster
 django-import-export
+djangorestframework
+markdown
+django-filter
