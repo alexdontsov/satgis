@@ -258,3 +258,24 @@ line-height: 1;
 
 .layer-switcher .panel { color:#000; }
 .leaflet-popup-content {color:#000; }
+
+footer.page-footer {
+    bottom: 0;
+    color: #fff;
+}
+.font-small {
+    font-size: .9rem;
+}
+.blue {
+    background-color: #2196f3 !important;
+}
+
+footer.page-footer .footer-copyright {
+    overflow: hidden;
+    background-color: rgba(0,0,0,.2);
+    font-size: .9rem;
+    color: rgba(255,255,255,.6);
+}
+.text-center {
+    text-align: center !important;
+}

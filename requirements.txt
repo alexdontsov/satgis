@@ -18,3 +18,4 @@ celery
 sentinelsat
 django-wms
 django-raster
+django-import-export
