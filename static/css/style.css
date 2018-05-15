@@ -279,3 +279,7 @@ footer.page-footer .footer-copyright {
 .text-center {
     text-align: center !important;
 }
+.page {
+    height100%;
+    background-color:#fff;
+}
