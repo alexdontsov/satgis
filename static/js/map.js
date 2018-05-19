@@ -67,7 +67,7 @@ var conf = {
         ]
     },
     tree: {
-        title: "#########################",
+        title: "Спутниковые данные",
         layers: [
                 {
                         name: "Sentinel-2, 29.08.2017",
@@ -122,6 +122,30 @@ var conf = {
                     {
                         name: "Sentinel-2, NDCI индекс, 29.08.2017",
                         layer: {
+                            type: "tileLayer.wms",
+                            args: [
+                                "http://localhost/cgi-bin/mapserv?map=/var/www/html/map.map&", {
+                                    maxZoom: 12,
+                                    format: 'image/png',
+				                    transparent: true,
+                                    layers: 'ndci2',
+                                    crs: L.CRS.EPSG4326,
+                                    version: '1.1.1',
+                                }
+                            ]
+                        }
+                    }
+
+        ]
+    },
+
+    tree2: {
+        title: "Наземные измерения",
+        layers: [
+
+                    {
+                        name: "Концентрация хлорофилла \"а\" в поверхностном слое",
+                        layer: {
                             type: "geoJson",
                             args: [
                                 geojson,
@@ -146,7 +170,11 @@ var conf = {
                     },
 
         ]
-    }
+    },
+
+
+
+
 };
 
 
@@ -165,6 +193,13 @@ var base1 = L.control.panelLayers(conf.base.layers, null,  {
 
 var over1 = L.control.panelLayers(null, conf.tree.layers, {
     title: conf.tree.title,
+    position: 'topright',
+    compact: true
+}).addTo(map);
+
+
+var over1 = L.control.panelLayers(null, conf.tree2.layers, {
+    title: conf.tree2.title,
     position: 'topright',
     compact: true
 }).addTo(map);
