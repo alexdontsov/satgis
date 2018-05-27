@@ -70,22 +70,6 @@ var conf = {
         title: "Спутниковые данные",
         layers: [
                 {
-                        name: "Sentinel-2, 03.19.2018",
-                        layer: {
-                            type: "tileLayer.wms",
-                            args: [
-                                "http://localhost/cgi-bin/mapserv?map=/var/www/html/map.map&", {
-                                    maxZoom: 12,
-                                    format: 'image/png',
-				                    transparent: true,
-                                    layers: 'vdn_0309',
-                                    crs: L.CRS.EPSG4326,
-                                    version: '1.1.1',
-                                }
-                            ]
-                        }
-                    },
-                {
                         name: "Sentinel-2, 29.08.2017",
                         layer: {
                             type: "tileLayer.wms",
@@ -101,7 +85,6 @@ var conf = {
                             ]
                         }
                     },
-
                     {
                         name: "Sentinel-2, 29.08.2017",
                         layer: {
@@ -196,7 +179,7 @@ var conf = {
 
 
 var map = L.map('map', {
-        center: L.latLng([52.46, 82.37]),
+        center: L.latLng([53.18, 84.36]),
         zoom: 6
     });
 

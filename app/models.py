@@ -45,6 +45,7 @@ class Metering(models.Model):
     class Meta:
         verbose_name = 'Измерения параметров'
         verbose_name_plural = 'Измерения параметров'
+        ordering = ['-id']
 
     def __unicode__(self):
         return self.time + '|' + self.value + '|' + self.type.type + '|' + self.waterObject.title
@@ -58,3 +59,25 @@ class MeteringResource(resources.ModelResource):
         import_id_fields = ('time', 'type', 'waterObject')
         skip_unchanged = True
         fields = ('time', 'value', 'type', 'waterObject')
+
+
+class Article(models.Model):
+    class Meta:
+        ordering = ['-add_date']
+
+    title = models.CharField(verbose_name='Заголовок', max_length=200)
+    add_date = models.DateTimeField(verbose_name="Дата создания", auto_now_add=True)
+    upd_date = models.DateTimeField(verbose_name="Дата изменения", auto_now=True)
+    text = models.TextField(verbose_name="Текст статьи", blank=True)
+    slug = models.CharField(verbose_name='Транслит', max_length=200, blank=True)
+
+    def __unicode__(self):
+        return self.title
+
+    def save(self):
+        self.slug = '{0}-{1}'.format(self.pk, slugify(self.title))  # Статья будет отображаться в виде NN-АА-АААА
+        super(Article, self).save()
+
+    class Meta:
+        verbose_name = 'Новости'
+        verbose_name_plural = 'Новости'

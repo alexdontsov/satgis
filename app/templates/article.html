@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block content %}
+
+<div style="padding-top:60px;" class="news-index">
+<h3>{{ article.title }}</h3>
+    {{ article.text }}
+
+</div>
+
+{% endblock %}

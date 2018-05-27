@@ -10,9 +10,12 @@ from django.contrib.sites.models import Site
 #######################################################################################################################
 # Main page view
 #######################################################################################################################
+from app.models import Article
+
 
 def index(request, template_name='index.html'):
-    return render(request, template_name)
+    articles = Article.objects.all()
+    return render(request, template_name, {'articles': articles})
 
 def about(request, template_name='about.html'):
     return render(request, template_name)

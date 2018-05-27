@@ -242,6 +242,21 @@ pre {
     height:600px;
 }
 
+.news-index {color: #000; margin-top:20px; text-align:left}
+.news-index a {color: #2196f3;}
+.news-index a.podr {text-align:right; float:right}
+.news-index .card { margin: 10px 0;}
+.page a, a:focus, a:hover {
+    color:#0078A8;
+}
+
+.bold-blue {
+	font-weight: bold;
+	color: #0277BD;
+}
+.page select.form-control:not([size]):not([multiple]) {
+height: auto;
+}
 #config {
 	margin: 0 10px;
 	padding: 0;
@@ -284,6 +299,7 @@ footer.page-footer .footer-copyright {
     text-align: center !important;
 }
 .page {
-    height100%;
+    position: relative;
+    overflow: hidden;
     background-color:#fff;
 }

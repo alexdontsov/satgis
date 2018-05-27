@@ -57,7 +57,9 @@
     </div>
 </div>
 
-<div id="mapid" style=" height: 600px;"></div>
+<div class="container page" style="margin-top:0; padding-top:80px;">
+
+    <div id="mapid" style=" height: 600px; "></div>
 <script>
 
 	var mymap = L.map('mapid').setView([52.46, 82.37], 8);
@@ -69,6 +71,19 @@
 
 	L.marker([54.52, 82.38 ]).addTo(mymap)
 		.bindPopup('<a href="/waterobjects/1-novosibirskoe-vodokhranilishche" ><b>Новосибирское водохранилище</b></a>').openPopup();
+
+	L.marker([53.18, 84.36 ]).addTo(mymap)
+		.bindPopup('<a href="/waterobjects/2-oz-krasilovskoe" ><b>оз. Красиловское</b></a>').openPopup();
+
+	L.marker([51.54, 87.69 ]).addTo(mymap)
+		.bindPopup('<a href="/waterobjects/3-oz-teletskoe" ><b>оз. Телецкое</b></a>').openPopup();
+
+	L.marker([52.98, 79.52 ]).addTo(mymap)
+		.bindPopup('<a href="/waterobjects/None-oz-kulundinsoke" ><b>оз. Кулундинсоке</b></a>').openPopup();
+
+	L.marker([52.87, 78.61 ]).addTo(mymap)
+		.bindPopup('<a href="/waterobjects/None-oz-iarovoe" ><b>оз. Яровое</b></a>').openPopup();
+
 
 	var popup = L.popup();
 
@@ -82,7 +97,25 @@
 	mymap.on('click', onMapClick);
 
 </script>
-<div class="container page" style="height:100%">
+ <div class="news-index">
+     <h3 style="color:#000">Новости</h3>
+    {% for art in articles %}
+   <div class="card">
+      <div class="card-body">
+        <h5 class="card-title"> <a href="/news/{{ art.slug }}/">{{ art.title }}</a></h5>
+        <p class="card-text"> {{ art.text }}</p>
+        <a  href="/news/{{ art.slug }}/" class="btn btn-primary podr">подробнее...</a>
+      </div>
+    </div>
+
+{% endfor %}
+
+
+
+ </div>
+
+
+
 </div>
 
 
