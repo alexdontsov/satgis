@@ -22,3 +22,7 @@ django-import-export
 djangorestframework
 markdown
 django-filter
+redis
+django-celery-beat
+django-celery-results
+#http://igrik.pythonanywhere.com/django/ispolzovanie-celery-i-redis-s-django/
