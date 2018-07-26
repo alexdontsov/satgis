@@ -22,3 +22,5 @@ django-import-export
 djangorestframework
 markdown
 django-filter
+django-import-export
+slugify
