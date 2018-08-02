@@ -4,16 +4,36 @@ from django.core.management.base import BaseCommand
 
 
 class Command(BaseCommand):
-    # Задаём текст помощи, который будет
-    # отображён при выполнении команды
-    # python manage.py createtags --help
-    help = 'Creates specified number of tags'
 
-    # def add_arguments(self, parser):
+    help = 'Download Sentinel data'
 
+    def add_arguments(self, parser):
 
-        # В данном случае, это один аргумент типа int.
-        # parser.add_argument('tags_count', nargs=1, type=int)
+        parser.add_argument(
+            '--date', dest='date', required=True,
+            help='Date...',
+        )
+        parser.add_argument(
+            '--geojson', dest='geojson', required=True,
+            help='Geojson...',
+        )
+
+        parser.add_argument(
+            '--date_start', dest='date_start', required=True,
+            help='Date start...',
+        )
+        parser.add_argument(
+            '--date_stop', dest='date_stop', required=True,
+            help='Date stop...',
+        )
+        parser.add_argument(
+            '--platformname', dest='platformname', required=True,
+            help='platformname...',
+        )
+        parser.add_argument(
+            '--cloud', dest='cloud', required=True,
+            help='cloud...',
+        )
 
     def handle(self, *args, **options):
         # Получаем аргумент, создаём необходимое количество тегов
