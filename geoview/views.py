@@ -14,7 +14,7 @@ from app.models import Article
 
 
 def index(request, template_name='index.html'):
-    articles = Article.objects.all()
+    articles = Article.objects.all().order_by('-id')
     return render(request, template_name, {'articles': articles})
 
 def about(request, template_name='about.html'):
@@ -25,6 +25,7 @@ def examples(request, template_name='examples.html'):
 
 def news(request, template_name='news.html'):
     return render(request, template_name)
+
 
 # class TileManager(APIPermissionMixin, View):
 #     """

@@ -24,3 +24,8 @@ markdown
 django-filter
 django-import-export
 slugify
+redis
+django-celery-beat
+django-celery-results
+geopandas
+#http://igrik.pythonanywhere.com/django/ispolzovanie-celery-i-redis-s-django/
