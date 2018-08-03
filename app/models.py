@@ -5,8 +5,6 @@ from django.db import models
 from slugify import slugify
 from import_export import resources
 
-
-
 class WaterObject(models.Model):
     title = models.CharField(verbose_name='Название', max_length=255)
     lat = models.CharField(max_length=255)
@@ -81,3 +79,7 @@ class Article(models.Model):
     class Meta:
         verbose_name = 'Новости'
         verbose_name_plural = 'Новости'
+
+class RasterData(models.Model):
+    title = models.CharField(verbose_name='Заголовок', max_length=200)
+    product_id = models.CharField(verbose_name='ID', max_length=200)
