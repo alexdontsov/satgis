@@ -111,16 +111,16 @@
     {% endfor %}
      <div class="pagination">
     <span class="step-links">
-        {% if contacts.has_previous %}
-            <a href="?page={{ contacts.previous_page_number }}">previous</a>
+        {% if articles.has_previous %}
+            <a href="?page={{ articles.previous_page_number }}">предыдущая</a>
         {% endif %}
 
         <span class="current">
-            Page {{ contacts.number }} of {{ contacts.paginator.num_pages }}.
+            Страница {{ articles.number }} из {{ articles.paginator.num_pages }}.
         </span>
 
-        {% if contacts.has_next %}
-            <a href="?page={{ contacts.next_page_number }}">next</a>
+        {% if articles.has_next %}
+            <a href="?page={{ articles.next_page_number }}">следующая</a>
         {% endif %}
     </span>
 </div>
