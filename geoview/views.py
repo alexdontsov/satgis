@@ -1,3 +1,4 @@
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseServerError
 # from ModestMaps.Core import Coordinate
@@ -15,6 +16,16 @@ from app.models import Article
 
 def index(request, template_name='index.html'):
     articles = Article.objects.all().order_by('-id')
+    paginator = Paginator(articles, 2)
+    page = request.GET.get('page')
+    # articles = paginator.page(page)
+    try:
+        articles = paginator.page(page)
+    except PageNotAnInteger:
+        articles = paginator.page(1)
+    except EmptyPage:
+        articles = paginator.page(paginator.num_pages)
+
     return render(request, template_name, {'articles': articles})
 
 def about(request, template_name='about.html'):
