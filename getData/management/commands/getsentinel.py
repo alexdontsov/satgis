@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.core.management.base import BaseCommand
-# from main_app import models
+from getData.Sentinel import getSentinelData
 
 
 class Command(BaseCommand):
@@ -17,13 +17,12 @@ class Command(BaseCommand):
             '--geojson', dest='geojson', required=True,
             help='Geojson...',
         )
-
         parser.add_argument(
-            '--date_start', dest='date_start', required=True,
+            '--date_start', dest='date_start', required=False,
             help='Date start...',
         )
         parser.add_argument(
-            '--date_stop', dest='date_stop', required=True,
+            '--date_stop', dest='date_stop', required=False,
             help='Date stop...',
         )
         parser.add_argument(
@@ -31,17 +30,14 @@ class Command(BaseCommand):
             help='platformname...',
         )
         parser.add_argument(
-            '--cloud', dest='cloud', required=True,
+            '--cloud', dest='cloud', required=False,
             help='cloud...',
         )
 
     def handle(self, *args, **options):
-        # Получаем аргумент, создаём необходимое количество тегов
-        # и выводим сообщение об успешном завершении генерирования
-        # tags_count = options['tags_count'][0]
-        #
-        # for i in range(tags_count):
-        #     models.Tag.objects.create(text='Tag{0}'.format(i))
-        #
-        # self.stdout.write('Successfully created {0} tags!'.format(tags_count))
-        print 'aaaaaaaa'
+        # get arguments
+        date = options['date']
+        geojson = options['geojson']
+        platformname = options['platformname']
+
+        getSentinelData(geojson, date, platformname)

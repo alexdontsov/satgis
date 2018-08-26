@@ -47,8 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.gis',
     'django_celery_beat',
     'django_celery_results',
-    # 'wms',
-    # 'raster',
+    'wms',
     'geoview',
     'app',
     'getData',
@@ -56,6 +55,7 @@ INSTALLED_APPS = [
     'app.shapefiles',
     'app.tms',
     'import_export',
+    'raster',
 
 ]
 
@@ -144,6 +144,8 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+DATETIME_FORMAT = '%d-%m-%Y %H:%M:%S'
 
 STATIC_URL = '/static/'
 

@@ -58,7 +58,12 @@ body {
 .inner {
   padding: 30px;
 }
-
+.pagination {
+    padding:20px;
+    margin: 0 auto;
+    display: block;
+    width: 40%;
+}
 
 /*
  * Header

@@ -2,6 +2,9 @@
 from __future__ import unicode_literals
 from django.shortcuts import render, render_to_response, get_object_or_404
 from django.template import RequestContext
+from wms.views import WmsView
+
+from app.wmsmap import MyWmsView
 from .models import WaterObject, Article, Metering
 
 

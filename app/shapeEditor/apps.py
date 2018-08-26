@@ -6,3 +6,4 @@ from django.apps import AppConfig
 
 class ShapeeditorConfig(AppConfig):
     name = 'shapeEditor'
+    verbose_name = "Редактор SH"

@@ -5,6 +5,7 @@ from django.db import models
 from slugify import slugify
 from import_export import resources
 
+
 class WaterObject(models.Model):
     title = models.CharField(verbose_name='Название', max_length=255)
     lat = models.CharField(max_length=255)
@@ -26,6 +27,7 @@ class WaterObject(models.Model):
 
 class Param(models.Model):
     type = models.CharField(verbose_name='Параметр', max_length=255)
+
     class Meta:
         verbose_name = 'Параметры'
         verbose_name_plural = 'Параметры'
@@ -34,19 +36,32 @@ class Param(models.Model):
         return self.type
 
 
+class DataSource(models.Model):
+    title = models.CharField(verbose_name='Название', max_length=255)
+
+    class Meta:
+        verbose_name = 'Источники данных'
+        verbose_name_plural = 'Источники данных'
+
+    def __unicode__(self):
+        return self.title
+
+
 class Metering(models.Model):
     value = models.CharField(verbose_name='Значение', max_length=255)
     waterObject = models.ForeignKey(WaterObject)
     type = models.ForeignKey(Param)
-    time = models.CharField(verbose_name='Время', max_length=255)
+    dataSource = models.ForeignKey(DataSource)
+    # time = models.CharField(verbose_name='Время', max_length=255)
+    time = models.DateTimeField(verbose_name='Time', max_length=255)
 
     class Meta:
         verbose_name = 'Измерения параметров'
         verbose_name_plural = 'Измерения параметров'
-        ordering = ['-id']
+        ordering = ['-time']
 
     def __unicode__(self):
-        return self.time + '|' + self.value + '|' + self.type.type + '|' + self.waterObject.title
+        return self.value + '|' + self.type.type + '|' + self.waterObject.title
 
 
 class MeteringResource(resources.ModelResource):
@@ -79,6 +94,7 @@ class Article(models.Model):
     class Meta:
         verbose_name = 'Новости'
         verbose_name_plural = 'Новости'
+
 
 class RasterData(models.Model):
     title = models.CharField(verbose_name='Заголовок', max_length=200)
