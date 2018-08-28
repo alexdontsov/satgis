@@ -99,3 +99,14 @@ class Article(models.Model):
 class RasterData(models.Model):
     title = models.CharField(verbose_name='Заголовок', max_length=200)
     product_id = models.CharField(verbose_name='ID', max_length=200)
+    waterObject = models.ForeignKey(WaterObject)
+    date = models.DateField(verbose_name='Time', max_length=255)
+
+
+class RasterLayer(models.Model):
+    title = models.CharField(verbose_name='Заголовок', max_length=200)
+    product_id = models.CharField(verbose_name='ID', max_length=200)
+    file = models.CharField(verbose_name='Файл', max_length=200)
+    waterObject = models.ForeignKey(WaterObject)
+    date = models.DateField(verbose_name='Time', max_length=255)
+
