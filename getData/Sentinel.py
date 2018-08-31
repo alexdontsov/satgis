@@ -1,19 +1,25 @@
 from __future__ import absolute_import, unicode_literals
+
+import datetime
 from sentinelsat import SentinelAPI, read_geojson, geojson_to_wkt
-from app.models import RasterData
+from app.models import RasterData, WaterObject
 import zipfile
 import os
 
 from osgeo import gdal
+from django.utils import timezone
+import pytz
+
 
 # http://docs.celeryproject.org/en/latest/userguide/periodic-tasks.html#using-custom-scheduler-classes
 # @app.task(bind=True)
 '''
-example command: python manage.py getsentinel --date=NOW-2DAYS --geojson=/home/alex/DCORP/SatGis/satgis/getData/nvd.geojson --platformname=Sentinel-2
+example command: python manage.py getsentinel --date=NOW-2DAYS --geojson=/home/alex/DCORP/SatGis/satgis/getData/nvd.geojson 
+--platformname=Sentinel-2 --waterObject=nwdh
 '''
 
 
-def getSentinelData(geojson, date='NOW-2DAYS', platformname='Sentinel-2', cloudcoverpercentage=(0, 30)):
+def getSentinelData(geojson, waterObject, date='NOW-2DAYS', platformname='Sentinel-2', cloudcoverpercentage=(0, 30)):
     # login, pass, obj
     api = SentinelAPI('rumato', '123qweR$', 'https://scihub.copernicus.eu/dhus')
     # footprint = geojson_to_wkt(read_geojson('/home/alex/DCORP/SatGis/satgis/getData/nvd.geojson'))
@@ -23,6 +29,10 @@ def getSentinelData(geojson, date='NOW-2DAYS', platformname='Sentinel-2', cloudc
                          platformname=platformname,
                          cloudcoverpercentage=cloudcoverpercentage
                          )
+    waterObj = WaterObject.objects.get(slug_name=waterObject)
+    print waterObj
+    timezone.now()
+    # exit()
     for product_id, product in products.items():
 
         if RasterData.objects.filter(product_id=product_id).exists():
@@ -32,7 +42,10 @@ def getSentinelData(geojson, date='NOW-2DAYS', platformname='Sentinel-2', cloudc
             print 'get data... product_id = ' + product_id + ' ---> ' + product['title']
 
             api.download(product_id)
-            p = RasterData(title=product['title'], product_id=product_id)
+            print product['ingestiondate']
+            # exit()
+            p = RasterData(title=product['title'], product_id=product_id, waterObject=waterObj,
+                           date=datetime.datetime(product['ingestiondate'],  tzinfo=pytz.UTC))
             p.save()
             zip = zipfile.ZipFile(product['title'] + '.zip')
             zip.extractall('./rasters')
@@ -46,7 +59,6 @@ def getSentinelData(geojson, date='NOW-2DAYS', platformname='Sentinel-2', cloudc
             patch = patch + f[0] + '/IMG_DATA/'
             files = os.listdir(patch)
             os.makedirs('./rasters/' + product['title'])
-            print files
             for file in files:
                 if 'xml' not in file:
                     ds = gdal.Open(patch + file)
@@ -73,6 +85,11 @@ def getSentinelData(geojson, date='NOW-2DAYS', platformname='Sentinel-2', cloudc
 
             print 'calc NDWI indes for ' + product['title']
             indexNDWI(product)
+            ############
+            l = RasterData(title=product['title'], product_id=product_id, waterObject=waterObj,
+                           date=datetime.datetime(product['ingestiondate'], tzinfo=pytz.UTC))
+            l.save()
+
             # delete data
             # os.remove('./rasters/' + product['title'] + '.SAFE')
         # exit()
@@ -92,5 +109,5 @@ def indexNDWI(product):
 def createComposite(product):
     command = 'gdal_calc.py -A ./rasters/' + product['title'] + '/*_B04.tif ' \
                   '-B ./rasters/' \
-              + product['title'] + '/*_B08.tif --outfile=./rasters/' + product['title'] + '/' + 'ndwi.tif --calc="(A-B)/(A+B)"'
+              + product['title'] + '/*_B08.tif --outfile=./rasters/' + product['title'] + '/' + 'naturalcolors.tif --calc="(A-B)/(A+B)"'
     os.system(command)

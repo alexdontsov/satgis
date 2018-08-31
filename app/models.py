@@ -12,6 +12,7 @@ class WaterObject(models.Model):
     long = models.CharField(max_length=255)
     description = models.CharField(max_length=255)
     slug = models.CharField(verbose_name='Транслит', max_length=200, blank=True)
+    slug_name = models.CharField(verbose_name='Slug', max_length=200, blank=True)
 
     def __unicode__(self):
         return self.title
@@ -100,7 +101,7 @@ class RasterData(models.Model):
     title = models.CharField(verbose_name='Заголовок', max_length=200)
     product_id = models.CharField(verbose_name='ID', max_length=200)
     waterObject = models.ForeignKey(WaterObject)
-    date = models.DateField(verbose_name='Time', max_length=255)
+    date = models.DateTimeField(verbose_name='Time', max_length=255)
 
 
 class RasterLayer(models.Model):
@@ -108,5 +109,5 @@ class RasterLayer(models.Model):
     product_id = models.CharField(verbose_name='ID', max_length=200)
     file = models.CharField(verbose_name='Файл', max_length=200)
     waterObject = models.ForeignKey(WaterObject)
-    date = models.DateField(verbose_name='Time', max_length=255)
+    date = models.DateTimeField(verbose_name='Time', max_length=255)
 

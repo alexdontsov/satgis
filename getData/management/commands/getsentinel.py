@@ -18,6 +18,10 @@ class Command(BaseCommand):
             help='Geojson...',
         )
         parser.add_argument(
+            '--waterObject', dest='waterObject', required=True,
+            help='waterObject id...',
+        )
+        parser.add_argument(
             '--date_start', dest='date_start', required=False,
             help='Date start...',
         )
@@ -38,6 +42,7 @@ class Command(BaseCommand):
         # get arguments
         date = options['date']
         geojson = options['geojson']
+        waterObject = options['waterObject']
         platformname = options['platformname']
 
-        getSentinelData(geojson, date, platformname)
+        getSentinelData(geojson, waterObject, date, platformname)
