@@ -2,7 +2,7 @@ from __future__ import absolute_import, unicode_literals
 
 import datetime
 from sentinelsat import SentinelAPI, read_geojson, geojson_to_wkt
-from app.models import RasterData, WaterObject, RasterLayer
+from app.models import RasterData, WaterObject, RasterLayer, VectorLayer
 import zipfile
 import os
 
@@ -99,7 +99,34 @@ def getSentinelData(geojson, waterObject, date='NOW-2DAYS', platformname='Sentin
                            date=product['ingestiondate'],
                            file=product['title'] + '/' + 'ndwi.tif')
             l.save()
+            #### natural color
+            createComposite(product)
+            l = RasterLayer(title=product['title'] + 'Natural colors', product_id=product_id, waterObject=waterObj,
+                            date=product['ingestiondate'],
+                            file=product['title'] + '/' + 'natural.tif')
+            l.save()
 
+
+
+            ### vector
+            '''
+            gdal_polygonize.py /home/alex/DCORP/SatGis/satgis/rasters/S2B_MSIL1C_20180920T053639_N0206_R005_T44UNF_20180920T081720/ndwi.tif -f "ESRI Shapefile" 
+            /home/alex/DCORP/SatGis/satgis/rasters/S2B_MSIL1C_20180920T053639_N0206_R005_T44UNF_20180920T081720/temp.shp temp DN=0
+            '''
+            os.system(
+                'gdal_polygonize.py ' + './rasters/' + product['title'] + '/ndwi.tif -f "ESRI Shapefile" ' + './rasters/' + product['title'] + '/temp.shp temp DN=0')
+
+            '''
+            ogr2ogr -f "ESRI Shapefile" -dialect SQLite -sql 'SELECT *,ST_Area(geometry) AS area FROM temp ORDER BY area DESC LIMIT 1' test1.shp temp.shp
+            '''
+            os.system(
+                'ogr2ogr -f "ESRI Shapefile" -dialect SQLite -sql "SELECT *,ST_Area(geometry) AS area FROM temp ORDER BY area DESC LIMIT 1"'
+                ' ./rasters/' + product['title'] + '/ndwi.shp  ./rasters/' + product['title'] + '/temp.shp ')
+
+            vector = VectorLayer(title=product['title'], product_id=product_id, waterObject=waterObj,
+                            date=product['ingestiondate'],
+                            file=product['title'] + '/' + 'ndwi.shp')
+            vector.save()
             # delete data
             # os.remove('./rasters/' + product['title'] + '.SAFE')
         # exit()
@@ -119,9 +146,14 @@ def indexNDWI(product):
     print command
     os.system(command)
 
-
+'''
+gdal_merge.py -n 0 -a_nodata 0 -separate -of Gtiff -o natural.tif  *_B04.tif  *_B03.tif  *_B02.tif
+'''
 def createComposite(product):
-    command = 'gdal_calc.py -A ./rasters/' + product['title'] + '/*_B04.tif ' \
-                  '-B ./rasters/' \
-              + product['title'] + '/*_B08.tif --outfile=./rasters/' + product['title'] + '/' + 'naturalcolors.tif --calc="(A-B)/(A+B)"'
+
+    command = 'gdal_merge.py -n 0 -a_nodata 0 -separate -of Gtiff -o ./rasters/' + product['title'] + '/natural.tif ' \
+                  './rasters/' + product['title'] + '/*_B04.tif ./rasters/' + product['title'] + '/*_B03.tif ./rasters/'\
+              + product['title'] + '/*_B02.tif'
+    print command
+
     os.system(command)

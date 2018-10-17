@@ -111,3 +111,8 @@ class RasterLayer(models.Model):
     waterObject = models.ForeignKey(WaterObject)
     date = models.DateTimeField(verbose_name='Time', max_length=255)
 
+
+class VectorLayer(RasterLayer):
+    class Meta:
+        verbose_name = 'Векторные данные'
+        verbose_name_plural = 'Векторные данные'

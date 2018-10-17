@@ -15,7 +15,7 @@ def all_waterobjects(request):
 def one_waterobject_by_slug(request, slug):
 
     article = get_object_or_404(WaterObject, slug=slug)
-    meterings = Metering.objects.select_related().filter(waterObject = article.id)
+    meterings = Metering.objects.select_related().filter(waterObject=article.id)
     if meterings:
         return render(request, 'water_obj_data.html', {'article': article, 'meterings': meterings})
 

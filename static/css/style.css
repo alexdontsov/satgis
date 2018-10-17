@@ -22,7 +22,9 @@ a:hover {
   border: 1px solid #fff;
 }
 
-
+.table-responsive {
+    color: #000;
+}
 /*
  * Base structure
  */
