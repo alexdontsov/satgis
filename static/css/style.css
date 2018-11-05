@@ -25,6 +25,19 @@ a:hover {
 .table-responsive {
     color: #000;
 }
+.all-news {
+    font-size: 18px;
+    float: right;
+    border-bottom: 1px dashed;
+    margin: 10px 0;
+}
+.all-news:hover {
+    text-decoration: none;
+}
+.news-index a.podr {
+    color: #fff;
+}
+
 /*
  * Base structure
  */

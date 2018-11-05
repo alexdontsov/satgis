@@ -107,49 +107,24 @@
         <a  href="/news/{{ art.slug }}/" class="btn btn-primary podr">подробнее...</a>
       </div>
     </div>
-
     {% endfor %}
-     <div class="pagination">
-    <span class="step-links">
-        {% if articles.has_previous %}
-            <a href="?page={{ articles.previous_page_number }}">предыдущая</a>
-        {% endif %}
-
-        <span class="current">
-            Страница {{ articles.number }} из {{ articles.paginator.num_pages }}.
-        </span>
-
-        {% if articles.has_next %}
-            <a href="?page={{ articles.next_page_number }}">следующая</a>
-        {% endif %}
-    </span>
+     <a  href="/news" class="all-news">все новости >>></a>
 </div>
 
-
-
-
- </div>
-
-
-
 </div>
-
-
-
+</div>
 <!--Footer-->
 <footer class="page-footer font-small blue pt-4 mt-4">
 <div class="container">
     <!--Footer Links-->
     <div class="container-fluid text-center text-md-left">
         <div class="row">
-
             <!--First column-->
             <div class="col-md-6">
                 <h5 class="text-uppercase">SibWater 1.0</h5>
                 <p>Web-платформа регистрации гидрологических параметров внутриконтинентальных водных объектов.</p>
             </div>
             <!--/.First column-->
-
             <!--Second column-->
             <div class="col-md-6">
                 <h5 class="text-uppercase">Меню</h5>

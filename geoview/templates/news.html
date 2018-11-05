@@ -59,16 +59,36 @@
     </div>
 </div>
 <div class="container">
+    <div class="news-index" style="margin-top:80px;">
+        <h3 style="color:#000">Новости</h3>
+        {% for art in articles %}
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title"><a href="/news/{{ art.slug }}/">{{ art.title }}</a></h5>
+                <p class="card-text"> {{ art.text }}</p>
+                <a href="/news/{{ art.slug }}/" class="btn btn-primary podr">подробнее...</a>
+            </div>
+        </div>
+
+        {% endfor %}
+        <div class="pagination">
+    <span class="step-links">
+        {% if articles.has_previous %}
+            <a href="?page={{ articles.previous_page_number }}">предыдущая</a>
+        {% endif %}
+
+        <span class="current">
+            Страница {{ articles.number }} из {{ articles.paginator.num_pages }}.
+        </span>
+
+        {% if articles.has_next %}
+            <a href="?page={{ articles.next_page_number }}">следующая</a>
+        {% endif %}
+    </span>
+        </div>
 
 
-
-
-    <h2 style="margin-top:80px; color:#000;">Новости</h2>
-
-
-
-
-    <footer id="footer">
+        <footer id="footer">
         <div class="row">
             <div class="col-lg-12">
 

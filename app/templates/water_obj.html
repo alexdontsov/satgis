@@ -3,39 +3,40 @@
 {% block content %}
 
 <div id="map" style="width: 100%; height: 700px;"></div>
-
-<div class="btn-group">
-    <button type="button" id="allbus" class="btn btn-success">All</button>
-    <button type="button" id="others" class="btn btn-primary">Others</button>
-    <button type="button" id="cafes" class="btn btn-danger">Cafes</button>
-</div>
-
 <div class="table-responsive">
   <table class="table">
     <thead>
       <tr>
-        <th scope="col">#</th>
+        <th scope="col"># id</th>
         <th scope="col"></th>
         <th scope="col">Слой</th>
+        <th scope="col">Тип</th>
         <th scope="col">Дата</th>
-
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <th scope="row">1</th>
-        <td><input class="layer_control" name="layer_control" type="checkbox"  id="S2A_MSIL1C_20180928T054631_N0206_R048_T44UNF_20180929T141745"
-                   value="S2A_MSIL1C_20180928T054631_N0206_R048_T44UNF_20180929T141745"> </td>
-        <td>Cell</td>
-        <td>Cell</td>
+  {% for layer in layers %}
+    <tr>
+        <th scope="row">{{ layer.id }}</th>
+        <td>
+          <input class="layer_control" name="layer_control" type="checkbox"
+                 id="{{ layer.id }}"
+                 value="{{ layer.title }}"
+                 data-path="{{ layer.file }}"
+                 data-typemap="{{ layer.type }}"
+          >
+        </td>
+        <td>{{ layer.title }}</td>
+        <td>{{ layer.type }}</td>
+        <td>{{ layer.date }}</td>
 
       </tr>
+
+    {% endfor %}
 
     </tbody>
   </table>
 </div>
-
-
 <script type="text/javascript">
     var mymap = L.map('map').setView([52.46, 82.37], 8);
 
@@ -49,30 +50,16 @@
 		name: "Esri.WorldImagery",
 
 	});
-	var layer = L.tileLayer.wms('http://localhost/cgi-bin/mapserv?map=/home/alex/DCORP/SatGis/satgis/static/maps/vectormap.map&ctype=/home/alex/DCORP/SatGis/satgis/rasters/S2A_MSIL1C_20180928T054631_N0206_R048_T44UNF_20180929T141745/ndwi.shp', {
-		    maxZoom: 18,
-            format: 'image/png',
-            transparent: true,
-            layers: 'NDVI',
-            crs: L.CRS.EPSG4326,
-            version: '1.1.1',
-	    });
 
 	var layers = {};
 
 	var layerGroup = L.layerGroup().addTo(mymap)
 
-	function addLayerToMap(layerId) {
-        var layer11 = L.tileLayer.wms('http://localhost/cgi-bin/mapserv?map=/var/www/html/map.map&', {
-		    maxZoom: 18,
-            format: 'image/png',
-            transparent: true,
-            layers: 'vdn_0309',
-            crs: L.CRS.EPSG4326,
-            version: '1.1.1',
-	    });
+	function addLayerToMap(layerId, format) {
 
-	    var layer = L.tileLayer.wms('http://localhost/cgi-bin/mapserv?map=/home/alex/DCORP/SatGis/satgis/static/maps/vectormap.map&ctype=/home/alex/DCORP/SatGis/satgis/rasters/'+layerId+'/ndwi.shp', {
+	    var url = 'http://localhost/cgi-bin/mapserv?map=/home/alex/DCORP/SatGis/satgis/static/maps/'+format+'.map&ctype=/home/alex/DCORP/SatGis/satgis/rasters/'+layerId;
+
+	    var layer = L.tileLayer.wms(url, {
 		    maxZoom: 18,
             format: 'image/png',
             transparent: true,
@@ -80,28 +67,26 @@
             crs: L.CRS.EPSG4326,
             version: '1.1.1',
 	    });
-	    console.log(layer);
 
 	    return layer;
 
     }
-    layers["S2A_MSIL1C_20180928T054631_N0206_R048_T44UNF_20180929T141745"] = addLayerToMap($('#S2A_MSIL1C_20180928T054631_N0206_R048_T44UNF_20180929T141745').val());
-    $(".layer_control").change(function() {
-                   layerGroup.addLayer(layers[$(this).val()]);
-                   //layerGroup.addLayer($(this).val());
+</script>
+<script type="text/javascript">
+{% for layer in layers %}
+    layers["{{ layer.id }}"] = addLayerToMap($('#{{ layer.id }}').data("path"), $('#{{ layer.id }}').data("typemap"));
+{% endfor %}
 
+    $(".layer_control").change(function() {
+                   layerGroup.addLayer(layers[$(this).attr('id')]);
                    var ischecked= $(this).is(':checked');
                    if(!ischecked) {
-                   var x_id = L.stamp(layers["S2A_MSIL1C_20180928T054631_N0206_R048_T44UNF_20180929T141745"]);
-                   var layerObj = layers["S2A_MSIL1C_20180928T054631_N0206_R048_T44UNF_20180929T141745"];
-                   layerGroup.removeLayer(x_id);
+                        var x_id = L.stamp(layers[$(this).attr('id')]);
+                        var layerObj = layers[$(this).attr('id')];
+                        layerGroup.removeLayer(x_id);
 
-                   } else {
-                   // console.log(layers.test);
-                         //layerGroup.addMap(mymap);
-                    }
-                      //
-                });
+                   }
+     });
 </script>
 
 

@@ -10,6 +10,10 @@ class WaterObject(models.Model):
     title = models.CharField(verbose_name='Название', max_length=255)
     lat = models.CharField(max_length=255)
     long = models.CharField(max_length=255)
+    x1 = models.CharField(max_length=255)
+    y1 = models.CharField(max_length=255)
+    x2 = models.CharField(max_length=255)
+    y2 = models.CharField(max_length=255)
     description = models.CharField(max_length=255)
     slug = models.CharField(verbose_name='Транслит', max_length=200, blank=True)
     slug_name = models.CharField(verbose_name='Slug', max_length=200, blank=True)
@@ -110,6 +114,7 @@ class RasterLayer(models.Model):
     file = models.CharField(verbose_name='Файл', max_length=200)
     waterObject = models.ForeignKey(WaterObject)
     date = models.DateTimeField(verbose_name='Time', max_length=255)
+    type = models.CharField(verbose_name='Тип', max_length=20)
 
 
 class VectorLayer(RasterLayer):

@@ -31,6 +31,8 @@ def getSentinelData(geojson, waterObject, date='NOW-2DAYS', platformname='Sentin
                          )
     waterObj = WaterObject.objects.get(slug_name=waterObject)
     print waterObj
+    # print waterObj.x1
+
     timezone.now()
     # exit()
     for product_id, product in products.items():
@@ -67,10 +69,10 @@ def getSentinelData(geojson, waterObject, date='NOW-2DAYS', platformname='Sentin
                     #                     projWin=[571377.923077, 6067937.5, 609733.615385, 6021562.5])
                     # ds = None
 
-                    print 'gdal_translate -of GTiff -a_nodata 0 -projwin 571377.923077, 6067937.5, 609733.615385, 6021562.5   ' + patch + file + ' ./rasters/' + product['title'] + '/' + file
+                    print 'gdal_translate -of GTiff -a_nodata 0 -projwin '+ waterObj.x1 +', '+ waterObj.y1+', '+ waterObj.x2+', '+ waterObj.y2+'   ' + patch + file + ' ./rasters/' + product['title'] + '/' + file
 
                     os.system(
-                        'gdal_translate -of GTiff -a_nodata 0 -projwin 571377.923077, 6067937.5, 609733.615385, 6021562.5  '
+                        'gdal_translate -of GTiff -a_nodata 0 -projwin '+ waterObj.x1 +' '+ waterObj.y1 +' '+ waterObj.x2 +' '+ waterObj.y2 +'  '
                         + patch + file
                         + ' ./rasters/' + product['title'] + '/' + file)
 
@@ -97,24 +99,21 @@ def getSentinelData(geojson, waterObject, date='NOW-2DAYS', platformname='Sentin
             ############
             l = RasterLayer(title=product['title'], product_id=product_id, waterObject=waterObj,
                            date=product['ingestiondate'],
-                           file=product['title'] + '/' + 'ndwi.tif')
+                           file=product['title'] + '/' + 'ndwi.tif', type='raster')
             l.save()
             #### natural color
             createComposite(product)
-            l = RasterLayer(title=product['title'] + 'Natural colors', product_id=product_id, waterObject=waterObj,
+            l = RasterLayer(title=product['title'], product_id=product_id, waterObject=waterObj,
                             date=product['ingestiondate'],
-                            file=product['title'] + '/' + 'natural.tif')
+                            file=product['title'] + '/' + 'natural.tif', type='raster')
             l.save()
-
-
-
             ### vector
             '''
             gdal_polygonize.py /home/alex/DCORP/SatGis/satgis/rasters/S2B_MSIL1C_20180920T053639_N0206_R005_T44UNF_20180920T081720/ndwi.tif -f "ESRI Shapefile" 
             /home/alex/DCORP/SatGis/satgis/rasters/S2B_MSIL1C_20180920T053639_N0206_R005_T44UNF_20180920T081720/temp.shp temp DN=0
             '''
             os.system(
-                'gdal_polygonize.py ' + './rasters/' + product['title'] + '/ndwi.tif -f "ESRI Shapefile" ' + './rasters/' + product['title'] + '/temp.shp temp DN=0')
+                'gdal_polygonize.py ' + './rasters/' + product['title'] + '/ndwi-t.tif -f "ESRI Shapefile" ' + './rasters/' + product['title'] + '/temp.shp temp DN=0')
 
             '''
             ogr2ogr -f "ESRI Shapefile" -dialect SQLite -sql 'SELECT *,ST_Area(geometry) AS area FROM temp ORDER BY area DESC LIMIT 1' test1.shp temp.shp
@@ -125,7 +124,7 @@ def getSentinelData(geojson, waterObject, date='NOW-2DAYS', platformname='Sentin
 
             vector = VectorLayer(title=product['title'], product_id=product_id, waterObject=waterObj,
                             date=product['ingestiondate'],
-                            file=product['title'] + '/' + 'ndwi.shp')
+                            file=product['title'] + '/' + 'ndwi.shp', type='vector')
             vector.save()
             # delete data
             # os.remove('./rasters/' + product['title'] + '.SAFE')
@@ -142,18 +141,30 @@ def getSentinelData(geojson, waterObject, date='NOW-2DAYS', platformname='Sentin
 def indexNDWI(product):
     command = 'gdal_calc.py -A ./rasters/' + product['title'] + '/*_B04.tif ' \
                   '-B ./rasters/' + product['title'] + '/*_B08.tif --outfile=./rasters/'\
-              + product['title'] + '/' + 'ndwi.tif --calc="(A-B)/(A+B)"'
+              + product['title'] + '/' + 'ndwi-t.tif --calc="(A-B)/(A+B)"'
     print command
+
     os.system(command)
+
+    command = 'gdal_translate -scale -ot Byte ./rasters/' + product['title'] + '/ndwi-t.tif ./rasters/' + product['title'] + '/ndwi.tif -a_nodata 0'
+    print command
+
+    os.system(command)
+
 
 '''
 gdal_merge.py -n 0 -a_nodata 0 -separate -of Gtiff -o natural.tif  *_B04.tif  *_B03.tif  *_B02.tif
 '''
 def createComposite(product):
 
-    command = 'gdal_merge.py -n 0 -a_nodata 0 -separate -of Gtiff -o ./rasters/' + product['title'] + '/natural.tif ' \
+    command = 'gdal_merge.py -n 0 -a_nodata 0 -separate -of Gtiff -o ./rasters/' + product['title'] + '/natural-t.tif ' \
                   './rasters/' + product['title'] + '/*_B04.tif ./rasters/' + product['title'] + '/*_B03.tif ./rasters/'\
               + product['title'] + '/*_B02.tif'
+    print command
+
+    os.system(command)
+
+    command = 'gdal_translate -ot Byte -scale 0 4096 0 255 -b 1 -b 2 -b 3 -a_nodata 0 ./rasters/' + product['title'] + '/natural-t.tif ./rasters/' + product['title'] + '/natural.tif'
     print command
 
     os.system(command)

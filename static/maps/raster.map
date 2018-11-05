@@ -1,0 +1,62 @@
+MAP
+IMAGETYPE PNG
+  NAME 'Web map'
+  SIZE 300 300
+  UNITS dd
+  EXTENT 60.2289530630876442 48.9969740071353286 110.0024212413648002 57.9999999949999889
+ OUTPUTFORMAT
+	NAME png
+	DRIVER "AGG/PNG"
+	MIMETYPE "image/png"
+	IMAGEMODE RGBA
+	EXTENSION "png"
+    TRANSPARENT   ON
+
+  END
+  WEB
+    TEMPLATE  '/var/www/html/index.html'
+    IMAGEPATH '/var/www/html/'
+    IMAGEURL  '/var/www/html/'
+  METADATA
+  "wms_enable_request" "*"
+      "wms_title"          'QGIS-MAP'
+      "wms_onlineresource"  'http://localhost/cgi-bin/mapserv?map=/var/www/html/map.map&'
+      "wms_abstract" "This is the WMS demo from GIS-Lab"
+      "wms_srs"             'EPSG:4326'
+      "wms_feature_info_mime_type" "text/html"
+    "wms_format" "image/png"
+    END
+  END
+   PROJECTION
+     "proj=longlat"
+    "datum=WGS84"
+    "no_defs"
+   END
+
+  LAYER
+    NAME NDVI
+    VALIDATION
+        "ctype" "[a-z]+"
+    END
+    TYPE RASTER
+ 	DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT 60.2289530630876442 48.9969740071353286 110.0024212413648002 57.9999999949999889
+    DATA '%ctype%'
+    METADATA
+      wms_title 'test'
+      wms_abstract 'test'
+      "wms_server_version" "1.1.1"
+      "wms_srs" "EPSG:4326"
+
+   END
+   STATUS ON
+   OFFSITE 0 0 0
+ 	PROCESSING "RESAMPLE=BILINEAR"
+ 	PROCESSING "NODATA=0"
+    	PROCESSING "SCALE=0,255"
+ 	TRANSPARENCY 100
+ 	OPACITY 100
+   END
+
+END
