@@ -11,11 +11,11 @@ def all_waterobjects(request):
 def one_waterobject_by_slug(request, slug):
 
     article = get_object_or_404(WaterObject, slug=slug)
-    meterings = Metering.objects.select_related().filter(waterObject=article.id).order_by('-id')
+    #meterings = Metering.objects.select_related().filter(waterObject=article.id).order_by('-id')
     layers = RasterLayer.objects.select_related().filter(waterObject=article.id).order_by('-date')
 
-    if meterings:
-        return render(request, 'water_obj_data.html', {'article': article, 'meterings': meterings})
+    #if meterings:
+    #    return render(request, 'water_obj_data.html', {'article': article, 'meterings': meterings})
 
     return render(request, 'water_obj.html', { 'article': article, 'layers': layers })
 
