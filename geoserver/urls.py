@@ -7,7 +7,6 @@ from app import shapefiles
 from app import tms
 from app.shapefiles.views import list_shapefiles
 from app.views import all_waterobjects, one_waterobject_by_slug, one_article_by_slug
-from app.wmsmap import MyWmsView
 
 admin.site.site_header = ('SibWater 1.0')
 admin.site.index_title = ('SibWater 1.0')
@@ -25,6 +24,6 @@ urlpatterns = [
     url(r'^waterobjects/$', all_waterobjects),
     url(r'^waterobjects/(?P<slug>[\w-]+)/$', one_waterobject_by_slug),
     url(r'^news/(?P<slug>[\w-]+)/$', one_article_by_slug),
-    url(r'^wms/$', MyWmsView.as_view(), name='wms'),
+    #url(r'^wms/$', MyWmsView.as_view(), name='wms'),
 
 ]
