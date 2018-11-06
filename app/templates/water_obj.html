@@ -59,7 +59,7 @@
 
 	function addLayerToMap(layerId, format) {
 
-	    var url = 'http://localhost/cgi-bin/mapserv?map=/home/alex/DCORP/SatGis/satgis/static/maps/'+format+'.map&ctype=/home/alex/DCORP/SatGis/satgis/rasters/'+layerId;
+	    var url = '/cgi-bin/mapserv?map={{ project_path }}/static/maps/'+format+'.map&ctype=/home/alex/DCORP/SatGis/satgis/rasters/'+layerId;
 
 	    var layer = L.tileLayer.wms(url, {
 		    maxZoom: 18,
