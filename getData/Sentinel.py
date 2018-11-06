@@ -99,13 +99,13 @@ def getSentinelData(geojson, waterObject, date='NOW-2DAYS', platformname='Sentin
             ############
             l = RasterLayer(title=product['title'], product_id=product_id, waterObject=waterObj,
                            date=product['ingestiondate'],
-                           file=product['title'] + '/' + 'ndwi.tif', type='raster')
+                           file=product['title'] + '/' + 'ndwi.tif', type='raster', param='NDWI индекс')
             l.save()
             #### natural color
             createComposite(product)
             l = RasterLayer(title=product['title'], product_id=product_id, waterObject=waterObj,
                             date=product['ingestiondate'],
-                            file=product['title'] + '/' + 'natural.tif', type='raster')
+                            file=product['title'] + '/' + 'natural.tif', type='raster', param='Комбинация каналов 4-3-2')
             l.save()
             ### vector
             '''
@@ -124,7 +124,7 @@ def getSentinelData(geojson, waterObject, date='NOW-2DAYS', platformname='Sentin
 
             vector = VectorLayer(title=product['title'], product_id=product_id, waterObject=waterObj,
                             date=product['ingestiondate'],
-                            file=product['title'] + '/' + 'ndwi.shp', type='vector')
+                            file=product['title'] + '/' + 'ndwi.shp', type='vector', param='NDWI')
             vector.save()
             # delete data
             # os.remove('./rasters/' + product['title'] + '.SAFE')

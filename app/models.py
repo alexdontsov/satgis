@@ -115,6 +115,7 @@ class RasterLayer(models.Model):
     waterObject = models.ForeignKey(WaterObject)
     date = models.DateTimeField(verbose_name='Time', max_length=255)
     type = models.CharField(verbose_name='Тип', max_length=20)
+    param = models.CharField(verbose_name='Параметр', max_length=20)
 
 
 class VectorLayer(RasterLayer):

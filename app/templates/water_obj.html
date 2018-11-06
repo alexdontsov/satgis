@@ -10,7 +10,8 @@
         <th scope="col"># id</th>
         <th scope="col"></th>
         <th scope="col">Слой</th>
-        <th scope="col">Тип</th>
+        <th scope="col">Параметр</th>
+        <th scope="col">Формат</th>
         <th scope="col">Дата</th>
       </tr>
     </thead>
@@ -27,7 +28,8 @@
           >
         </td>
         <td>{{ layer.title }}</td>
-        <td>{{ layer.type }}</td>
+        <td>{{ layer.param }}</td>
+        <td><a href="/rasters/{{ layer.file }}">{{ layer.type }}</a></td>
         <td>{{ layer.date }}</td>
 
       </tr>
