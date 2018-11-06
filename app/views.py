@@ -20,7 +20,7 @@ def one_waterobject_by_slug(request, slug):
     #if meterings:
     #    return render(request, 'water_obj_data.html', {'article': article, 'meterings': meterings,})
     project_path = settings.BASE_DIR
-    return render(request, 'water_obj.html', { 'article': article, 'layers': layers, 'project_path': project_path })
+    return render(request, 'water_obj.html', { 'water_obj': article, 'layers': layers, 'project_path': project_path })
 
 def all_articles(request):
     articles = Article.objects.all()
