@@ -59,6 +59,8 @@ class Metering(models.Model):
     dataSource = models.ForeignKey(DataSource)
     # time = models.CharField(verbose_name='Время', max_length=255)
     time = models.DateTimeField(verbose_name='Time', max_length=255)
+    lat = models.CharField(verbose_name='Широта', max_length=255)
+    long = models.CharField(verbose_name='Долгота', max_length=255)
 
     class Meta:
         verbose_name = 'Измерения параметров'
@@ -107,6 +109,12 @@ class RasterData(models.Model):
     waterObject = models.ForeignKey(WaterObject)
     date = models.DateTimeField(verbose_name='Time', max_length=255)
 
+    def __unicode__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = 'Загруженные данные'
+        verbose_name_plural = 'Загруженные данные'
 
 class RasterLayer(models.Model):
     title = models.CharField(verbose_name='Заголовок', max_length=200)
@@ -116,6 +124,13 @@ class RasterLayer(models.Model):
     date = models.DateTimeField(verbose_name='Time', max_length=255)
     type = models.CharField(verbose_name='Тип', max_length=512)
     param = models.CharField(verbose_name='Параметр', max_length=512)
+
+    def __unicode__(self):
+        return self.title + '|' + self.waterObject.title
+
+    class Meta:
+        verbose_name = 'Слои данных'
+        verbose_name_plural = 'Слои данных'
 
 
 class VectorLayer(RasterLayer):
