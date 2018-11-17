@@ -20,13 +20,13 @@ example command: python manage.py getsentinel --date=NOW-2DAYS --geojson=/home/a
 '''
 
 
-def getSentinelData(geojson, waterObject, date='NOW-2DAYS', platformname='Sentinel-2', cloudcoverpercentage=(0, 30)):
+def getSentinelData(geojson, waterObject, date='NOW-2DAYS', endDate='NOW', platformname='Sentinel-2', cloudcoverpercentage=(0, 30)):
     # login, pass, obj
     api = SentinelAPI('rumato', '123qweR$', 'https://scihub.copernicus.eu/dhus')
     # footprint = geojson_to_wkt(read_geojson('/home/alex/DCORP/SatGis/satgis/getData/nvd.geojson'))
     footprint = geojson_to_wkt(read_geojson(geojson))
     products = api.query(footprint,
-                         date=(date, 'NOW'),
+                         date=(date, endDate),
                          platformname=platformname,
                          cloudcoverpercentage=cloudcoverpercentage
                          )
@@ -64,11 +64,6 @@ def getSentinelData(geojson, waterObject, date='NOW-2DAYS', platformname='Sentin
             os.makedirs('./rasters/' + product['title'])
             for file in files:
                 if 'xml' not in file:
-
-                    # ds = gdal.Open(patch + file)
-                    # ds = gdal.Translate('./rasters/' + product['title'] + '/' + file, ds,
-                    #                     projWin=[571377.923077, 6067937.5, 609733.615385, 6021562.5])
-                    # ds = None
 
                     print 'gdal_translate -of GTiff -a_nodata 0 -projwin '+ waterObj.x1 +', '+ waterObj.y1+', '+ waterObj.x2+', '+ waterObj.y2+'   ' + patch + file + ' ./rasters/' + product['title'] + '/' + file
 

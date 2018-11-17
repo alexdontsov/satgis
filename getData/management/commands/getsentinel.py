@@ -41,8 +41,9 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         # get arguments
         date = options['date']
+        endDate = options['date_stop']
         geojson = options['geojson']
         waterObject = options['waterObject']
         platformname = options['platformname']
 
-        getSentinelData(geojson, waterObject, date, platformname)
+        getSentinelData(geojson, waterObject, date, endDate, platformname)
