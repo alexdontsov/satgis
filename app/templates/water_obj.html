@@ -104,7 +104,15 @@
 </script>
 <script type="text/javascript">
 {% for layer in layers %}
-    color = Math.floor(Math.random() * 200) ;
+    function getRandomColor() {
+        var letters = '0123456789ABCDEF';
+        var color = '#';
+        for (var i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+}
+    color = getRandomColor();
     layers["{{ layer.id }}"] = addLayerToMap($('#{{ layer.id }}').data("path"), $('#{{ layer.id }}').data("typemap"), color);
 {% endfor %}
 
