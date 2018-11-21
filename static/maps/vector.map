@@ -40,7 +40,6 @@ TRANSPARENT   ON
         "ctype" "[a-z]+"
         "color" "[a-z]+"
     END
-
     METADATA
       wms_title 'test'
       wms_abstract 'test'
@@ -53,12 +52,10 @@ TRANSPARENT   ON
     DATA '%ctype%'
     CLASS
       STYLE
-        COLOR 0 %color% 255
+        COLOR '%color%'
+        #STYLEITEM "javascript://style.js"
         OUTLINECOLOR 0 0 0
       END
     END
   END
-
-
-
 END
