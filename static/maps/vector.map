@@ -38,8 +38,9 @@ TRANSPARENT   ON
     NAME "NDVI"
     VALIDATION
         "ctype" "[a-z]+"
-        #"color_pol" "[a-z]+"
+       # "cpol" "[a-z]+"
     END
+
     METADATA
       wms_title 'test'
       wms_abstract 'test'
@@ -52,8 +53,8 @@ TRANSPARENT   ON
     DATA '%ctype%'
     CLASS
       STYLE
-        #COLOR '%color_pol%'
-        COLOR 99 92 191
+        #COLOR '%cpol%'
+        COLOR [convert(varchar(3), ((128 + convert(int,env_min_x)) % 253)) + " " + convert(varchar(3), ((200 + convert(int,env_min_x)) % 254)) + " " + convert(varchar(3), ((64 + convert(int,env_min_x)) % 255))]
         #STYLEITEM "javascript://style.js"
         OUTLINECOLOR 0 0 0
       END
