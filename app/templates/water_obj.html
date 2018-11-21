@@ -87,7 +87,8 @@
 
 	function addLayerToMap(layerId, format, color) {
 
-	    var url = '/cgi-bin/mapserv?map={{ project_path }}/static/maps/'+format+'.map&ctype={{ project_path }}/rasters/'+layerId + '&color_pol='+ color;
+	    //var url = '/cgi-bin/mapserv?map={{ project_path }}/static/maps/'+format+'.map&ctype={{ project_path }}/rasters/'+layerId + '&color_pol='+ color;
+	    var url = '/cgi-bin/mapserv?map={{ project_path }}/static/maps/'+format+'.map&ctype={{ project_path }}/rasters/'+layerId;
 
 	    var layer = L.tileLayer.wms(url, {
 		    maxZoom: 18,

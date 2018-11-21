@@ -38,7 +38,7 @@ TRANSPARENT   ON
     NAME "NDVI"
     VALIDATION
         "ctype" "[a-z]+"
-        "color_pol" "[a-z]+"
+        #"color_pol" "[a-z]+"
     END
     METADATA
       wms_title 'test'
@@ -52,7 +52,8 @@ TRANSPARENT   ON
     DATA '%ctype%'
     CLASS
       STYLE
-        COLOR '%color_pol%'
+        #COLOR '%color_pol%'
+        COLOR 99 92 191
         #STYLEITEM "javascript://style.js"
         OUTLINECOLOR 0 0 0
       END
