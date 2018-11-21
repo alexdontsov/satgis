@@ -53,7 +53,7 @@ TRANSPARENT   ON
     DATA '%ctype%'
     CLASS
       STYLE
-        COLOR 0 '%color%' 255
+        COLOR 0 %color% 255
         OUTLINECOLOR 0 0 0
       END
     END
