@@ -103,8 +103,7 @@
     }
 </script>
 <script type="text/javascript">
-{% for layer in layers %}
-    function getRandomColor() {
+function getRandomColor() {
         var letters = '0123456789ABCDEF';
         var color = '#';
         for (var i = 0; i < 6; i++) {
@@ -112,6 +111,8 @@
         }
         return color;
 }
+{% for layer in layers %}
+
     color = getRandomColor();
     layers["{{ layer.id }}"] = addLayerToMap($('#{{ layer.id }}').data("path"), $('#{{ layer.id }}').data("typemap"), color);
 {% endfor %}
