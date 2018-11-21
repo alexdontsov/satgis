@@ -85,9 +85,9 @@
 
 	var layerGroup = L.layerGroup().addTo(mymap)
 
-	function addLayerToMap(layerId, format) {
+	function addLayerToMap(layerId, format, color) {
 
-	    var url = '/cgi-bin/mapserv?map={{ project_path }}/static/maps/'+format+'.map&ctype={{ project_path }}/rasters/'+layerId;
+	    var url = '/cgi-bin/mapserv?map={{ project_path }}/static/maps/'+format+'.map&ctype={{ project_path }}/rasters/'+layerId + '&color='+ color;
 
 	    var layer = L.tileLayer.wms(url, {
 		    maxZoom: 18,
@@ -104,7 +104,8 @@
 </script>
 <script type="text/javascript">
 {% for layer in layers %}
-    layers["{{ layer.id }}"] = addLayerToMap($('#{{ layer.id }}').data("path"), $('#{{ layer.id }}').data("typemap"));
+    color = Math.floor(Math.random() * 200) ;
+    layers["{{ layer.id }}"] = addLayerToMap($('#{{ layer.id }}').data("path"), $('#{{ layer.id }}').data("typemap"), color);
 {% endfor %}
 
     $(".layer_control").change(function() {
