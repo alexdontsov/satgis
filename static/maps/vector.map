@@ -55,7 +55,7 @@ TRANSPARENT   ON
       STYLE
         #COLOR '%cpol%'
         COLOR 99 92 191
-        STYLEITEM "javascript://style.js"
+        #STYLEITEM "javascript://style.js"
         OUTLINECOLOR 0 0 0
       END
     END
