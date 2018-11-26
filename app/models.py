@@ -54,11 +54,11 @@ class DataSource(models.Model):
 
 class Metering(models.Model):
     value = models.CharField(verbose_name='Значение', max_length=255)
-    waterObject = models.ForeignKey(WaterObject)
-    type = models.ForeignKey(Param)
-    dataSource = models.ForeignKey(DataSource)
-    # time = models.CharField(verbose_name='Время', max_length=255)
-    time = models.DateTimeField(verbose_name='Time', max_length=255)
+    desc = models.CharField(verbose_name='Описание', max_length=255)
+    waterObject = models.ForeignKey(WaterObject, verbose_name='Водный объект',)
+    type = models.ForeignKey(Param, verbose_name='Параметр',)
+    dataSource = models.ForeignKey(DataSource, verbose_name='Источник данных',)
+    time = models.DateTimeField(verbose_name='Время', max_length=255)
     lat = models.CharField(verbose_name='Широта', max_length=255)
     long = models.CharField(verbose_name='Долгота', max_length=255)
 

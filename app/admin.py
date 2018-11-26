@@ -7,6 +7,8 @@ from .models import WaterObject, MeteringResource, Metering, Param, Article, Dat
 from import_export.admin import ImportExportModelAdmin
 
 class MeteringAdmin(ImportExportModelAdmin):
+    list_filter = ('time', 'waterObject', 'dataSource', 'type')
+    list_display = ('value', 'type', 'time', 'waterObject')
     resource_class = MeteringResource
 
 
