@@ -43,6 +43,7 @@ class Param(models.Model):
 
 class DataSource(models.Model):
     title = models.CharField(verbose_name='Название', max_length=255)
+    isEcspedit = models.BooleanField(verbose_name='Экспедиция')
 
     class Meta:
         verbose_name = 'Источники данных'
