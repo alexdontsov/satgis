@@ -194,7 +194,7 @@ function getRandomColor() {
 
                    }
      });
-
+     
     geojsonLayer = L.geoJson(geojson, {
     style: function(feature) {
         return {
@@ -211,6 +211,7 @@ function getRandomColor() {
         layer.bindPopup(feature.properties.desc +'<br>' + '<b>' + feature.properties.value + '<b>');
     }
 }).addTo(mymap);
+
 //map.addLayer(geojsonLayer);
 
 </script>
