@@ -64,33 +64,35 @@
                 <table class="table">
                     <thead>
                     <tr>
-                        <th scope="col"># id</th>
+                        <th scope="col">#</th>
                         <th scope="col"></th>
                         <th scope="col">Слой</th>
                         <th scope="col">Параметр</th>
-                        <th scope="col">Формат</th>
+                        <th scope="col">Описание</th>
                         <th scope="col">Дата</th>
                     </tr>
                     </thead>
                     <tbody>
                     {% for metering in meterings %}
                     <tr>
-                        <th scope="row">{{ layer.id }}</th>
                         <td>
-                            <input class="layer_control" name="layer_control" type="checkbox"
+                            <input class="meter_control" name="layer_control" type="checkbox"
                                    id="{{ metering.id }}"
                                    value="{{ metering.title }}"
                                    data-path="{{ metering.file }}"
                                    data-typemap="{{ metering.type }}"
                             >
                         </td>
-                        <td>{{ metering.value }}</td>
+
+                        <td>{{ metering.id }}</td>
+                        <td>{{ metering.value }} {{ metering.valueEd }}</td>
                         <td>
-                            <!--{{ layer.param }}-->
+                            {{ metering.param }}
                         </td>
                         <td>
-                            <!--<a href="/rasters/{{ layer.file }}">{{ layer.type }}</a>-->
+                            {{ metering.desc }}
                         </td>
+
                         <td>{{ metering.time }}</td>
 
                     </tr>
@@ -162,7 +164,7 @@
         "features": [
             {% for metering in meterings %}
 
-                { "type": "Feature", "properties": { "id": "1", "desc": "Боровое - Быстровка, л.б.", "value": {{ metering.value }} + ' мг/м3'}, "geometry": { "type": "Point", "coordinates": [ 82.65654255225229, 54.684554714785996 ] } },
+                { "type": "Feature", "properties": { "id": "1", "desc": "{{ metering.desc }}", "value": {{ metering.value }} + ' {{metering.valueEd}}'}, "geometry": { "type": "Point", "coordinates": [ {{ metering.lat }}, {{ metering.long }} ] } },
 
             {% endfor %}
 
@@ -194,7 +196,18 @@ function getRandomColor() {
 
                    }
      });
-     
+
+     $(".meter_control").change(function() {
+                   layerGroup.addLayer(geojsonLayer);
+                   var ischecked= $(this).is(':checked');
+                   if(!ischecked) {
+                        var x_id = L.stamp(geojsonLayer);
+                        //var layerObj = layers[$(this).attr('id')];
+                        layerGroup.removeLayer(x_id);
+
+                   }
+     });
+
     geojsonLayer = L.geoJson(geojson, {
     style: function(feature) {
         return {
@@ -210,9 +223,7 @@ function getRandomColor() {
     onEachFeature: function (feature, layer) {
         layer.bindPopup(feature.properties.desc +'<br>' + '<b>' + feature.properties.value + '<b>');
     }
-}).addTo(mymap);
-
-//map.addLayer(geojsonLayer);
+});
 
 </script>
 {% endblock %}

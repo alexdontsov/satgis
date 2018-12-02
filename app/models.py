@@ -41,6 +41,16 @@ class Param(models.Model):
         return self.type
 
 
+class ValueEd(models.Model):
+    valueEd = models.CharField(verbose_name='Единицы измерения', max_length=255)
+
+    class Meta:
+        verbose_name = 'Единицы измерения'
+        verbose_name_plural = 'Единицы измерения'
+
+    def __unicode__(self):
+        return self.valueEd
+
 class DataSource(models.Model):
     title = models.CharField(verbose_name='Название', max_length=255)
     isEcspedit = models.BooleanField(verbose_name='Экспедиция')
@@ -58,6 +68,7 @@ class Metering(models.Model):
     desc = models.CharField(verbose_name='Описание', max_length=255)
     waterObject = models.ForeignKey(WaterObject, verbose_name='Водный объект',)
     type = models.ForeignKey(Param, verbose_name='Параметр',)
+    valueEd = models.ForeignKey(ValueEd, verbose_name='Единицы измерения',)
     dataSource = models.ForeignKey(DataSource, verbose_name='Источник данных',)
     time = models.DateTimeField(verbose_name='Время', max_length=255)
     lat = models.CharField(verbose_name='Широта', max_length=255)
