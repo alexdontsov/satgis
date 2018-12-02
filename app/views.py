@@ -13,7 +13,7 @@ def all_waterobjects(request):
 
 def one_waterobject_by_slug(request, slug):
 
-    article = get_object_or_404(WaterObject, slug=slug)
+    article = get_object_or_404(WaterObject, id=slug)
     meterings = Metering.objects.select_related().filter(waterObject=article.id).order_by('-time')
     layers = RasterLayer.objects.select_related().filter(waterObject=article.id).order_by('-date')
 
