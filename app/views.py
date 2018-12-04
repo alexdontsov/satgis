@@ -5,8 +5,6 @@ from .models import WaterObject, Article, Metering, RasterLayer
 from django.conf import settings
 
 
-
-
 def all_waterobjects(request):
     articles = WaterObject.objects.all()
     return render_to_response('all_waters.html', {'articles': articles})
