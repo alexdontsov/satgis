@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from django.shortcuts import render, render_to_response, get_object_or_404
-from .models import WaterObject, Article, Metering, RasterLayer
+from .models import WaterObject, Article, Metering, RasterLayer, Param
 from django.conf import settings
 
 
@@ -14,10 +14,13 @@ def one_waterobject_by_slug(request, slug):
     article = get_object_or_404(WaterObject, id=slug)
     meterings = Metering.objects.select_related().filter(waterObject=article.id).order_by('-time')
     layers = RasterLayer.objects.select_related().filter(waterObject=article.id).order_by('-date')
+    params = Param.objects.all()
 
     project_path = settings.BASE_DIR
     return render(request, 'water_obj.html',
-                    {'water_obj': article, 'layers': layers, 'project_path': project_path, 'meterings': meterings}
+                    {'water_obj': article, 'layers': layers,
+                     'project_path': project_path, 'meterings': meterings, 'params': params,
+                     }
                   )
 
 def all_articles(request):

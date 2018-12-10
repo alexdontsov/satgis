@@ -38,6 +38,11 @@ a:hover {
     color: #fff;
 }
 
+.content-filter {
+    color:#000000;
+    padding: 20px;
+}
+
 /*
  * Base structure
  */
