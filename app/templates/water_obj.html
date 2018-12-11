@@ -58,11 +58,12 @@
                     </tbody>
                 </table>
             </div>
-        </div><!--- tab end ----->
+        </div>
+        <!--- tab end ----->
         <div class="tab-pane show fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
             <div class="content content-filter">
-                <div class="col-md-4">
-                    <form action="/" method="get">
+                <form action="/" method="get">
+                    <div class="col-filter col-md-3">
                         <div class="form-group">
                             <label for="param">Парматетр:</label>
                             <select class="form-control" id="param" name="param">
@@ -71,38 +72,58 @@
                                 {% endfor %}
                             </select>
                         </div>
-                        <button type="submit" class="btn btn-success">Фильтр</button>
-                    </form>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <div class="input-group" id="datetimepicker2">
-                            <input type="text" class="form-control"/>
-                            <span class="input-group-addon">
-                <i class="glyphicon glyphicon-calendar"></i>
-            </span>
+                    </div>
+
+                    <div class="col-filter col-md-3">
+                        <div class="form-group">
+                            <label for="date_from">Дата от:</label>
+                            <div class="input-group" id="datetimepicker2">
+                                <input id="date_from" type="date" class="form-control"/>
+                                <span class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </span>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
+
+                    <div class="col-filter col-md-3">
+                        <div class="form-group">
+                            <label for="date_to">Дата до:</label>
+                            <div class="input-group" id="datetimepicker2">
+                                <input id="date_to" type="date" class="form-control"/>
+                                <span class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-filter col-md-3">
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success">Фильтр</button>
+                        </div>
+                    </div>
+
+            </form>
+
 
         </div>
 
-            <div class="table-responsive">
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col"></th>
-                        <th scope="col">Слой</th>
-                        <th scope="col">Параметр</th>
-                        <th scope="col">Описание</th>
-                        <th scope="col">Дата</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for metering in meterings %}
-                    <tr>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col"></th>
+                    <th scope="col">Слой</th>
+                    <th scope="col">Параметр</th>
+                    <th scope="col">Описание</th>
+                    <th scope="col">Дата</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for metering in meterings %}
+                <tr>
                         <td>
                             <input class="meter_control" name="layer_control" type="checkbox"
                                    id="{{ metering.id }}"

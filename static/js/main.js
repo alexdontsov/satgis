@@ -1,5 +1,5 @@
 $( document ).ready(function() {
-        $('#datetimepicker2').datetimepicker({
-//            locale: 'ru'
-        });
+//        $('#datetimepicker2').datetimepicker({
+////            locale: 'ru'
+//        });
 });

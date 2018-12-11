@@ -42,6 +42,9 @@ a:hover {
     color:#000000;
     padding: 20px;
 }
+.col-filter {
+    float: left;
+}
 
 /*
  * Base structure
