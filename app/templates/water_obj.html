@@ -62,11 +62,12 @@
         <!--- tab end ----->
         <div class="tab-pane show fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
             <div class="content content-filter">
-                <form action="/" method="get">
+                <form action="" method="get">
                     <div class="col-filter col-md-3">
                         <div class="form-group">
                             <label for="param">Парматетр:</label>
                             <select class="form-control" id="param" name="param">
+                                <option value="0">параметр</option>
                                 {% for param in params %}
                                 <option value="{{ param.id }}">{{ param }}</option>
                                 {% endfor %}
@@ -78,7 +79,7 @@
                         <div class="form-group">
                             <label for="date_from">Дата от:</label>
                             <div class="input-group" id="datetimepicker2">
-                                <input id="date_from" type="date" class="form-control"/>
+                                <input id="date_from" name="date_from" type="date" class="form-control"/>
                                 <span class="input-group-addon">
                                     <i class="fa fa-calendar"></i>
                                 </span>
@@ -90,7 +91,7 @@
                         <div class="form-group">
                             <label for="date_to">Дата до:</label>
                             <div class="input-group" id="datetimepicker2">
-                                <input id="date_to" type="date" class="form-control"/>
+                                <input id="date_to" name="date_to" type="date" class="form-control"/>
                                 <span class="input-group-addon">
                                     <i class="fa fa-calendar"></i>
                                 </span>

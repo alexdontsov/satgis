@@ -88,9 +88,9 @@ class MeteringResource(resources.ModelResource):
     class Meta:
         model = Metering
         exclude = ('id',)
-        import_id_fields = ('time', 'type', 'waterObject')
+        import_id_fields = ('time', 'type', 'waterObject', 'dataSource')
         skip_unchanged = True
-        fields = ('time', 'value', 'type', 'waterObject')
+        fields = ('time', 'value', 'type', 'waterObject', 'dataSource')
 
 
 class Article(models.Model):

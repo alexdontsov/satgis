@@ -12,9 +12,21 @@ def all_waterobjects(request):
 def one_waterobject_by_slug(request, slug):
 
     article = get_object_or_404(WaterObject, id=slug)
-    meterings = Metering.objects.select_related().filter(waterObject=article.id).order_by('-time')
+
     layers = RasterLayer.objects.select_related().filter(waterObject=article.id).order_by('-date')
     params = Param.objects.all()
+
+    meterings = Metering.objects.select_related().filter(waterObject=article.id).order_by('-time')
+
+    if request.GET.get('param', '') != '0':
+        meterings = meterings.filter(type=request.GET.get('param', ''))
+
+    if request.GET.get('date_from', ''):
+        meterings = meterings.filter(time__gte=request.GET.get('date_from', ''))
+
+    if request.GET.get('date_to', ''):
+        meterings = meterings.filter(time__lte=request.GET.get('date_to', ''))
+
 
     project_path = settings.BASE_DIR
     return render(request, 'water_obj.html',
