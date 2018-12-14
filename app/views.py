@@ -18,7 +18,7 @@ def one_waterobject_by_slug(request, slug):
 
     meterings = Metering.objects.select_related().filter(waterObject=article.id).order_by('-time')
 
-    if request.GET.get('param', '') != '0':
+    if request.GET.get('param', '') and request.GET.get('param', '') != '0':
         meterings = meterings.filter(type=request.GET.get('param', ''))
 
     if request.GET.get('date_from', ''):

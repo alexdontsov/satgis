@@ -111,6 +111,18 @@
         </div>
 
         <div class="table-responsive">
+
+            <style>
+        canvas {
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+        }
+    </style>
+
+            <div style="width:75%;">
+    <canvas id="canvas"></canvas>
+</div>
             <table class="table">
                 <thead>
                 <tr>
@@ -269,6 +281,71 @@ function getRandomColor() {
 });
 
 </script>
+<script>
+    var dataChart = [
+        {% for metering in meterings %}
+             {
+                x: "{{ metering.time|date:'Y-m-d H:i' }}", y: {{ metering.value }}
+             },
+        {% endfor %}
+
+    ];
+</script>
+
+<script>
+
+    var timeFormat = 'Y.m.d H:i';
+
+    var config = {
+        type:    'line',
+        data:    {
+            datasets: [
+                {
+                    label: "US Dates",
+                    data: dataChart,
+                    fill: false,
+                    borderColor: 'red'
+                }
+
+            ]
+        },
+        options: {
+            responsive: true,
+            title:      {
+                display: true,
+                text:    "Chart.js Time Scale"
+            },
+            scales:     {
+                xAxes: [{
+                    type:       "time",
+                    time:       {
+                        format: timeFormat,
+                        //tooltipFormat: 'll',
+
+                    },
+                    min: '2017-10-02 18:43:53',
+                    scaleLabel: {
+                        display:     true,
+                        labelString: 'Дата'
+                    }
+                }],
+                yAxes: [{
+                    scaleLabel: {
+                        display:     true,
+                        labelString: 'value'
+                    }
+                }]
+            }
+        }
+    };
+
+    window.onload = function () {
+        var ctx       = document.getElementById("canvas").getContext("2d");
+        window.myLine = new Chart(ctx, config);
+    };
+
+</script>
+
 {% endblock %}
 
 
