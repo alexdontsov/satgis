@@ -48,7 +48,7 @@
                         </td>
                         <td>{{ layer.title }}</td>
                         <td>{{ layer.param }}</td>
-                        <td><a href="/rasters/{{ layer.file }}">{{ layer.type }}</a></td>
+                        <td><a href="/rasters/{{ layer.file }}">{{ layer.type }} <i class="glyphicon glyphicon-download-alt"></i></a></td>
                         <td>{{ layer.date }}</td>
 
                     </tr>
@@ -285,7 +285,7 @@ function getRandomColor() {
     var dataChart = [
         {% for metering in meterings %}
              {
-                x: "{{ metering.time|date:'Y-m-d H:i' }}", y: {{ metering.value }}
+                x: new Date("{{ metering.time|date:'Y-m-d H:i' }}"), y: {{ metering.value }}
              },
         {% endfor %}
 
@@ -293,9 +293,7 @@ function getRandomColor() {
 </script>
 
 <script>
-
     var timeFormat = 'Y.m.d H:i';
-
     var config = {
         type:    'line',
         data:    {
@@ -320,10 +318,9 @@ function getRandomColor() {
                     type:       "time",
                     time:       {
                         format: timeFormat,
-                        //tooltipFormat: 'll',
+                        tooltipFormat: 'll',
 
                     },
-                    min: '2017-10-02 18:43:53',
                     scaleLabel: {
                         display:     true,
                         labelString: 'Дата'
