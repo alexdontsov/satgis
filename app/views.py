@@ -9,9 +9,12 @@ def all_waterobjects(request):
     articles = WaterObject.objects.all()
     return render_to_response('all_waters.html', {'articles': articles})
 
-def one_waterobject_by_slug(request, slug):
 
+def one_waterobject_by_slug(request, slug):
     article = get_object_or_404(WaterObject, id=slug)
+    chart_display = False
+    chart_title = ''
+    chart_param = ''
 
     layers = RasterLayer.objects.select_related().filter(waterObject=article.id).order_by('-date')
     params = Param.objects.all()
@@ -20,6 +23,9 @@ def one_waterobject_by_slug(request, slug):
 
     if request.GET.get('param', '') and request.GET.get('param', '') != '0':
         meterings = meterings.filter(type=request.GET.get('param', ''))
+        if meterings:
+            chart_title = meterings[0].type
+            chart_param = meterings[0].type
 
     if request.GET.get('date_from', ''):
         meterings = meterings.filter(time__gte=request.GET.get('date_from', ''))
@@ -27,13 +33,22 @@ def one_waterobject_by_slug(request, slug):
     if request.GET.get('date_to', ''):
         meterings = meterings.filter(time__lte=request.GET.get('date_to', ''))
 
+    if request.GET.get('chart_display', ''):
+        chart_display = True
 
     project_path = settings.BASE_DIR
     return render(request, 'water_obj.html',
-                    {'water_obj': article, 'layers': layers,
-                     'project_path': project_path, 'meterings': meterings, 'params': params,
-                     }
-                  )
+                  {
+                      'water_obj': article,
+                      'layers': layers,
+                      'project_path': project_path,
+                      'meterings': meterings,
+                      'params': params,
+                      'chart_display': chart_display,
+                      'chart_title': chart_title,
+                      'chart_param': chart_param,
+                   }
+            )
 
 def all_articles(request):
     articles = Article.objects.all()
