@@ -23,7 +23,6 @@ def one_waterobject_by_slug(request, slug):
 
     meterings = Metering.objects.select_related().filter(waterObject=article.id).order_by('-time')
 
-    paginator = Paginator(meterings, 12)
     page = request.GET.get('page', '')
 
     if request.GET.get('param', '') and request.GET.get('param', '') != '0':
@@ -44,25 +43,27 @@ def one_waterobject_by_slug(request, slug):
 
     project_path = settings.BASE_DIR
 
+    paginator = Paginator(meterings, 12)
+    
     try:
         meterings = paginator.page(page)
     except PageNotAnInteger:
         meterings = paginator.page(1)
     except EmptyPage:
         meterings = paginator.page(paginator.num_pages)
-        
+
     return render(request, 'water_obj.html',
-                  {
-                      'water_obj': article,
-                      'layers': layers,
-                      'project_path': project_path,
-                      'meterings': meterings,
-                      'params': params,
-                      'chart_display': chart_display,
-                      'chart_title': chart_title,
-                      'chart_param': chart_param,
-                   }
-            )
+          {
+              'water_obj': article,
+              'layers': layers,
+              'project_path': project_path,
+              'meterings': meterings,
+              'params': params,
+              'chart_display': chart_display,
+              'chart_title': chart_title,
+              'chart_param': chart_param,
+           }
+        )
 
 def all_articles(request):
     articles = Article.objects.all()
