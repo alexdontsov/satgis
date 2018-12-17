@@ -44,7 +44,7 @@ def one_waterobject_by_slug(request, slug):
     project_path = settings.BASE_DIR
 
     paginator = Paginator(meterings, 12)
-    
+
     try:
         meterings = paginator.page(page)
     except PageNotAnInteger:
