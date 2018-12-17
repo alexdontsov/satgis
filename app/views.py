@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render, render_to_response, get_object_or_404
 from .models import WaterObject, Article, Metering, RasterLayer, Param
 from django.conf import settings
@@ -21,8 +23,12 @@ def one_waterobject_by_slug(request, slug):
 
     meterings = Metering.objects.select_related().filter(waterObject=article.id).order_by('-time')
 
+    paginator = Paginator(meterings, 12)
+    page = request.GET.get('page', '')
+
     if request.GET.get('param', '') and request.GET.get('param', '') != '0':
         meterings = meterings.filter(type=request.GET.get('param', ''))
+
         if meterings:
             chart_title = meterings[0].type
             chart_param = meterings[0].type
@@ -37,6 +43,14 @@ def one_waterobject_by_slug(request, slug):
         chart_display = True
 
     project_path = settings.BASE_DIR
+
+    try:
+        meterings = paginator.page(page)
+    except PageNotAnInteger:
+        meterings = paginator.page(1)
+    except EmptyPage:
+        meterings = paginator.page(paginator.num_pages)
+        
     return render(request, 'water_obj.html',
                   {
                       'water_obj': article,

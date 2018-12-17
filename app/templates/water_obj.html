@@ -48,7 +48,7 @@
                         </td>
                         <td>{{ layer.title }}</td>
                         <td>{{ layer.param }}</td>
-                        <td><a href="/rasters/{{ layer.file }}">{{ layer.type }} <i class="glyphicon glyphicon-download-alt"></i></a></td>
+                        <td><a href="/rasters/{{ layer.file }}">{{ layer.type }} <i class="fa fa-download"></i></a></td>
                         <td>{{ layer.date }}</td>
 
                     </tr>
@@ -170,6 +170,22 @@
                     </tbody>
                 </table>
             </div>
+
+            <div class="pagination">
+    <span class="step-links">
+        {% if meterings.has_previous %}
+            <a href="?page={{ meterings.previous_page_number }}">предыдущая</a>
+        {% endif %}
+
+        <span class="current">
+            Страница {{ meterings.number }} из {{ meterings.paginator.num_pages }}.
+        </span>
+
+        {% if meterings.has_next %}
+            <a href="?page={{ meterings.next_page_number }}">следующая</a>
+        {% endif %}
+    </span>
+        </div>
         </div>
 
         <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
