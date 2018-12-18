@@ -22,6 +22,29 @@ a:hover {
   border: 1px solid #fff;
 }
 
+.table-responsive {
+    color: #000;
+}
+.all-news {
+    font-size: 18px;
+    float: right;
+    border-bottom: 1px dashed;
+    margin: 10px 0;
+}
+.all-news:hover {
+    text-decoration: none;
+}
+.news-index a.podr {
+    color: #fff;
+}
+
+.content-filter {
+    color:#000000;
+    padding: 20px;
+}
+.col-filter {
+    float: left;
+}
 
 /*
  * Base structure
@@ -58,7 +81,13 @@ body {
 .inner {
   padding: 30px;
 }
-
+.pagination {
+    padding:20px;
+    margin: 0 auto;
+    display: block;
+    width: 40%;
+    color: #000000;
+}
 
 /*
  * Header

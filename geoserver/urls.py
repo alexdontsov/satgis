@@ -24,5 +24,6 @@ urlpatterns = [
     url(r'^waterobjects/$', all_waterobjects),
     url(r'^waterobjects/(?P<slug>[\w-]+)/$', one_waterobject_by_slug),
     url(r'^news/(?P<slug>[\w-]+)/$', one_article_by_slug),
+    #url(r'^wms/$', MyWmsView.as_view(), name='wms'),
 
 ]

@@ -75,7 +75,7 @@ var conf = {
                             type: "tileLayer.wms",
                             args: [
                                 "http://localhost/cgi-bin/mapserv?map=/var/www/html/map_kr.map&", {
-                                    maxZoom: 12,
+                                    
                                     format: 'image/png',
 				                    transparent: true,
                                     layers: 'test',
@@ -90,8 +90,7 @@ var conf = {
                         layer: {
                             type: "tileLayer.wms",
                             args: [
-                                "http://localhost/cgi-bin/mapserv?map=/var/www/html/map_kr.map&", {
-                                    maxZoom: 12,
+                                "http://localhost/cgi-bin/mapserv?map=/var/www/html/map_kr.map&", {              
                                     format: 'image/png',
 				                    transparent: true,
                                     layers: 'sentinel432-2',

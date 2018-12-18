@@ -1,17 +1,364 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 {% block content %}
-<div id="map" style="width: 100%; height: 700px;"></div>
-{{ request.path }}
+<div class="row">
+    <div id="map" style="width: 100%; height: 700px; margin-top:80px; overflow:hidden"></div>
+</div>
 
-{% if request.path == '/waterobjects/1-novosibirskoe-vodokhranilishche/' %}
-    <script src="{% static 'js/map.js' %}" type="text/javascript"></script>
-{% elif request.path == '/waterobjects/2-oz-krasilovskoe/' %}
-    <script src="{% static 'js/map-kr.js' %}" type="text/javascript"></script>
-{% elif request.path == '/waterobjects/3-oz-teletskoe/' %}
-     <script src="{% static 'js/map-tel.js' %}" type="text/javascript"></script>
-{% elif request.path == '/waterobjects/None-oz-kulundinsoke/' %}
-<script src="{% static 'js/map-kl.js' %}" type="text/javascript"></script>
+<div class="row">
+    <nav style="margin-top:30px;">
+        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+            <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab"
+               aria-controls="nav-home" aria-selected="true">
+                Спутниковые данные
+            </a>
+            <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab"
+               aria-controls="nav-profile" aria-selected="false">
+                Натурные данные & АПИК</a>
+
+        </div>
+    </nav>
+    <div class="tab-content" id="nav-tabContent" style="width:100%">
+        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col"># id</th>
+                        <th scope="col"></th>
+                        <th scope="col">Слой</th>
+                        <th scope="col">Параметр</th>
+                        <th scope="col">Формат</th>
+                        <th scope="col">Дата</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for layer in layers %}
+                    <tr>
+                        <th scope="row">{{ layer.id }}</th>
+                        <td>
+                            <input class="layer_control" name="layer_control" type="checkbox"
+                                   id="{{ layer.id }}"
+                                   value="{{ layer.title }}"
+                                   data-path="{{ layer.file }}"
+                                   data-typemap="{{ layer.type }}"
+                            >
+                        </td>
+                        <td>{{ layer.title }}</td>
+                        <td>{{ layer.param }}</td>
+                        <td><a href="/rasters/{{ layer.file }}">{{ layer.type }} <i class="fa fa-download"></i></a></td>
+                        <td>{{ layer.date }}</td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!--- tab end ----->
+        <div class="tab-pane show fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+            <div class="content content-filter">
+                <form action="" method="get">
+                    <div class="col-filter col-md-3">
+                        <div class="form-group">
+                            <label for="param">Парматетр:</label>
+                            <select class="form-control" id="param" name="param">
+                                <option value="0">параметр</option>
+                                {% for param in params %}
+                                <option value="{{ param.id }}">{{ param }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-filter col-md-3">
+                        <div class="form-group">
+                            <label for="date_from">Дата от:</label>
+                            <div class="input-group" id="datetimepicker2">
+                                <input id="date_from" name="date_from" type="date" class="form-control"/>
+                                <span class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-filter col-md-3">
+                        <div class="form-group">
+                            <label for="date_to">Дата до:</label>
+                            <div class="input-group" id="datetimepicker2">
+                                <input id="date_to" name="date_to" type="date" class="form-control"/>
+                                <span class="input-group-addon">
+                                    <i class="fa fa-calendar"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-filter col-md-3">
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success">Фильтр</button>
+                        </div>
+
+                        <div class="checkbox">
+                            <label><input type="checkbox" name="chart_display" value="1">Построить график</label>
+                        </div>
+                    </div>
+
+            </form>
+
+
+        </div>
+
+        <div class="table-responsive">
+        {% if chart_display %}
+            <style>
+        canvas {
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+        }
+    </style>
+
+            <div style="width:95%;">
+                <canvas id="canvas"></canvas>
+
+            </div>
+            {% endif %}
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col"></th>
+                    <th scope="col">Слой</th>
+                    <th scope="col">Параметр</th>
+                    <th scope="col">Описание</th>
+                    <th scope="col">Дата</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for metering in meterings %}
+                <tr>
+                        <td>
+                            <input class="meter_control" name="layer_control" type="checkbox"
+                                   id="{{ metering.id }}"
+                                   value="{{ metering.title }}"
+                                   data-path="{{ metering.file }}"
+                                   data-typemap="{{ metering.type }}"
+                            >
+                        </td>
+
+                        <td>{{ metering.id }}</td>
+                        <td>{{ metering.value }} {{ metering.valueEd }}</td>
+                        <td>
+                            {{ metering.type }}
+                        </td>
+                        <td>
+                            {{ metering.desc }}
+                        </td>
+
+                        <td>{{ metering.time }}</td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="pagination">
+    <span class="step-links">
+        {% if meterings.has_previous %}
+            <a href="?page={{ meterings.previous_page_number }}">предыдущая</a>
+        {% endif %}
+
+        <span class="current">
+            Страница {{ meterings.number }} из {{ meterings.paginator.num_pages }}.
+        </span>
+
+        {% if meterings.has_next %}
+            <a href="?page={{ meterings.next_page_number }}">следующая</a>
+        {% endif %}
+    </span>
+        </div>
+        </div>
+
+    </div>
+
+
+</div>
+
+<script type="text/javascript">
+
+    var mymap = L.map('map').setView([{{water_obj.lat}}, {{water_obj.long}}], 8);
+
+	L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+		maxZoom: 18,
+
+	}).addTo(mymap);
+
+	var esri = L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+		maxZoom: 18,
+		name: "Esri.WorldImagery",
+
+	});
+
+	var layers = {};
+
+	var layerGroup = L.layerGroup().addTo(mymap)
+
+	function addLayerToMap(layerId, format, color) {
+
+	    //var url = '/cgi-bin/mapserv?map={{ project_path }}/static/maps/'+format+'.map&ctype={{ project_path }}/rasters/'+layerId + '&color_pol='+ color;
+	    var url = '/cgi-bin/mapserv?map={{ project_path }}/static/maps/'+format+'.map&ctype={{ project_path }}/rasters/'+layerId;
+
+	    var layer = L.tileLayer.wms(url, {
+		    maxZoom: 18,
+            format: 'image/png',
+            transparent: true,
+            layers: 'NDVI',
+            crs: L.CRS.EPSG4326,
+            version: '1.1.1',
+	    });
+
+	    return layer;
+
+    }
+
+</script>
+
+<script>
+    var geojson = {
+        "type": "FeatureCollection",
+        "features": [
+            {% for metering in meterings %}
+
+                { "type": "Feature", "properties": { "id": "1", "desc": "{{ metering.desc }}", "value": {{ metering.value }} + ' {{metering.valueEd}}'}, "geometry": { "type": "Point", "coordinates": [ {{ metering.lat }}, {{ metering.long }} ] } },
+
+            {% endfor %}
+
+        ]
+    };
+</script>
+<script type="text/javascript">
+function getRandomColor() {
+        var letters = '0123456789ABCDEF';
+        var color = '#';
+        for (var i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+}
+{% for layer in layers %}
+
+    color = getRandomColor();
+    layers["{{ layer.id }}"] = addLayerToMap($('#{{ layer.id }}').data("path"), $('#{{ layer.id }}').data("typemap"), color);
+{% endfor %}
+
+    $(".layer_control").change(function() {
+                   layerGroup.addLayer(layers[$(this).attr('id')]);
+                   var ischecked= $(this).is(':checked');
+                   if(!ischecked) {
+                        var x_id = L.stamp(layers[$(this).attr('id')]);
+                        var layerObj = layers[$(this).attr('id')];
+                        layerGroup.removeLayer(x_id);
+
+                   }
+     });
+
+     $(".meter_control").change(function() {
+                   layerGroup.addLayer(geojsonLayer);
+                   var ischecked= $(this).is(':checked');
+                   if(!ischecked) {
+                        var x_id = L.stamp(geojsonLayer);
+                        //var layerObj = layers[$(this).attr('id')];
+                        layerGroup.removeLayer(x_id);
+
+                   }
+     });
+
+    geojsonLayer = L.geoJson(geojson, {
+    style: function(feature) {
+        return {
+        	color: "red"
+        };
+    },
+    pointToLayer: function(feature, latlng) {
+        return new L.CircleMarker(latlng, {
+        	radius: 7,
+        	fillOpacity: 0.85
+        });
+    },
+    onEachFeature: function (feature, layer) {
+        layer.bindPopup(feature.properties.desc +'<br>' + '<b>' + feature.properties.value + '<b>');
+    }
+});
+
+</script>
+{% if chart_display %}
+<script>
+    var dataChart = [
+        {% for metering in meterings %}
+             {
+                x: new Date("{{ metering.time|date:'Y-m-d H:i:s' }}"), y: {{ metering.value }}
+             },
+        {% endfor %}
+    ];
+</script>
+
+<script>
+    var timeFormat = 'MMM D, h:mm A';
+    var config = {
+        type:    'line',
+        data:    {
+            datasets: [
+                {
+                    label: "{{ chart_param }}",
+                    data: dataChart,
+                    fill: false,
+                    borderColor: 'red'
+                }
+
+            ]
+        },
+        options: {
+            responsive: true,
+            title:      {
+                display: true,
+                text:    "{{ chart_title }}"
+            },
+            scales:     {
+                xAxes: [{
+                    type:       "time",
+                    time:       {
+                        format: timeFormat,
+                        tooltipFormat: 'll',
+
+                    },
+                    scaleLabel: {
+                        display:     true,
+                        labelString: 'Дата'
+                    }
+                }],
+                yAxes: [{
+                    scaleLabel: {
+                        display:     true,
+                        labelString: 'Значение'
+                    }
+                }]
+            }
+        }
+    };
+
+    window.onload = function () {
+        var ctx       = document.getElementById("canvas").getContext("2d");
+        window.myLine = new Chart(ctx, config);
+    };
+
+</script>
 {% endif %}
 {% endblock %}
 

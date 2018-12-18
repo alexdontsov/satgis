@@ -70,19 +70,19 @@
 	}).addTo(mymap);
 
 	L.marker([54.52, 82.38 ]).addTo(mymap)
-		.bindPopup('<a href="/waterobjects/1-novosibirskoe-vodokhranilishche" ><b>Новосибирское водохранилище</b></a>').openPopup();
+		.bindPopup('<a href="/waterobjects/1" ><b>Новосибирское водохранилище</b></a>').openPopup();
 
 	L.marker([53.18, 84.36 ]).addTo(mymap)
-		.bindPopup('<a href="/waterobjects/2-oz-krasilovskoe" ><b>оз. Красиловское</b></a>').openPopup();
+		.bindPopup('<a href="/waterobjects/2" ><b>оз. Красиловское</b></a>').openPopup();
 
 	L.marker([51.54, 87.69 ]).addTo(mymap)
-		.bindPopup('<a href="/waterobjects/3-oz-teletskoe" ><b>оз. Телецкое</b></a>').openPopup();
+		.bindPopup('<a href="/waterobjects/3" ><b>оз. Телецкое</b></a>').openPopup();
 
 	L.marker([52.98, 79.52 ]).addTo(mymap)
-		.bindPopup('<a href="/waterobjects/None-oz-kulundinsoke" ><b>оз. Кулундинсоке</b></a>').openPopup();
+		.bindPopup('<a href="/waterobjects/4" ><b>оз. Кулундинсоке</b></a>').openPopup();
 
 	L.marker([52.87, 78.61 ]).addTo(mymap)
-		.bindPopup('<a href="/waterobjects/None-oz-iarovoe" ><b>оз. Яровое</b></a>').openPopup();
+		.bindPopup('<a href="/waterobjects/5" ><b>оз. Яровое</b></a>').openPopup();
 
 
 	var popup = L.popup();
@@ -107,33 +107,24 @@
         <a  href="/news/{{ art.slug }}/" class="btn btn-primary podr">подробнее...</a>
       </div>
     </div>
-
-{% endfor %}
-
-
-
- </div>
-
-
-
+    {% endfor %}
+     <a  href="/news" class="all-news">все новости >>></a>
 </div>
 
-
-
+</div>
+</div>
 <!--Footer-->
 <footer class="page-footer font-small blue pt-4 mt-4">
 <div class="container">
     <!--Footer Links-->
     <div class="container-fluid text-center text-md-left">
         <div class="row">
-
             <!--First column-->
             <div class="col-md-6">
                 <h5 class="text-uppercase">SibWater 1.0</h5>
                 <p>Web-платформа регистрации гидрологических параметров внутриконтинентальных водных объектов.</p>
             </div>
             <!--/.First column-->
-
             <!--Second column-->
             <div class="col-md-6">
                 <h5 class="text-uppercase">Меню</h5>
