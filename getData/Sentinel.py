@@ -19,7 +19,6 @@ example command: python manage.py getsentinel --date=NOW-2DAYS --geojson=/home/a
 --platformname=Sentinel-2 --waterObject=nwdh
 '''
 
-
 def getSentinelData(geojson, waterObject, date='NOW-2DAYS', endDate='NOW', platformname='Sentinel-2', cloudcoverpercentage=(0, 30)):
     # login, pass, obj
     api = SentinelAPI('rumato', '123qweR$', 'https://scihub.copernicus.eu/dhus')

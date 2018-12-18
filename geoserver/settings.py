@@ -36,7 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.gis',
     'django_celery_beat',
     'django_celery_results',
-    # 'wms',
+    'wms',
     'geoview',
     'app',
     'getData',
@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'app.shapefiles',
     'app.tms',
     'import_export',
-    'raster',
+    # 'raster',
 
 ]
 
