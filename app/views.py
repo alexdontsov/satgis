@@ -18,7 +18,7 @@ def one_waterobject_by_slug(request, slug):
     chart_title = ''
     chart_param = ''
 
-    layers = RasterLayer.objects.select_related().filter(waterObject=article.id).order_by('-date')
+    layers = RasterLayer.objects.select_related().filter(waterObject=article.id).filter(pub='n').order_by('-date')
     params = Param.objects.all()
 
     meterings = Metering.objects.select_related().filter(waterObject=article.id).order_by('-time')

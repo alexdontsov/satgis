@@ -90,9 +90,9 @@ class Algorithm(models.Model):
         verbose_name_plural = 'Алгоритмы'
 
 STATUS_CHOICES = [
-    ('d', 'Draft'),
-    ('p', 'Published'),
-    ('w', 'Withdrawn'),
+    ('d', 'Черновик'),
+    ('w', 'Работает'),
+    ('p', 'Выполнена'),
 ]
 
 class Task(models.Model):
@@ -115,9 +115,10 @@ class TaskAdmin(admin.ModelAdmin):
 
     actions = ['start']
     def start(self, request, queryset):
-
         rows_updated = queryset.update(status='p')
-        time.sleep(5)
+        # layer = RasterLayer(title='')
+        RasterLayer.objects.filter(pub='p').update(pub='n')
+        time.sleep(10)
         if rows_updated == 1:
             message_bit = "1 одна задача выполнена"
         else:
@@ -184,6 +185,7 @@ class RasterLayer(models.Model):
     date = models.DateTimeField(verbose_name='Time', max_length=255)
     type = models.CharField(verbose_name='Тип', max_length=512)
     param = models.CharField(verbose_name='Параметр', max_length=512)
+    pub = models.CharField(verbose_name='Публикация', max_length=5)
 
     def __unicode__(self):
         return self.title + '|' + self.waterObject.title
