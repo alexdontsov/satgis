@@ -1,5 +1,5 @@
 datetime
-Django==1.8
+Django==1.11
 psycopg2
 pandas
 werkzeug
@@ -26,5 +26,5 @@ redis
 django-celery-beat
 django-celery-results
 geopandas
-mapscript
+slugify
 #http://igrik.pythonanywhere.com/django/ispolzovanie-celery-i-redis-s-django/

@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 from django.contrib import admin
 
-from .models import WaterObject, MeteringResource, Metering, Param, Article, DataSource, RasterLayer, RasterData, ValueEd
+from .models import WaterObject, MeteringResource, Metering, Param, Article, DataSource, RasterLayer, RasterData, ValueEd, Task, Algorithm, TaskAdmin
 from import_export.admin import ImportExportModelAdmin
 
 class MeteringAdmin(ImportExportModelAdmin):
@@ -13,6 +13,8 @@ class MeteringAdmin(ImportExportModelAdmin):
 
 
 
+admin.site.register(Task, TaskAdmin)
+admin.site.register(Algorithm)
 admin.site.register(WaterObject)
 admin.site.register(Param)
 admin.site.register(ValueEd)

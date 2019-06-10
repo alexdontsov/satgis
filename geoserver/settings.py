@@ -125,7 +125,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/
 
-LANGUAGE_CODE = 'ru-RU'
+LANGUAGE_CODE = 'ru'
 
 TIME_ZONE = 'UTC'
 
@@ -140,6 +140,7 @@ DATETIME_FORMAT = '%d-%m-%Y %H:%M:%S'
 STATIC_URL = '/static/'
 
 STATIC_ROOT = BASE_DIR + "/collected_static/" #
+MEDIA_ROOT = BASE_DIR + "/media/" #
 STATICFILES_DIRS = (
     BASE_DIR + "/static/", #тут нужно указывать путти к css и js, которые не в папках static приложений,
 )

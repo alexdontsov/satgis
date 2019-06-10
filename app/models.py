@@ -4,7 +4,8 @@ from __future__ import unicode_literals
 from django.db import models
 from slugify import slugify
 from import_export import resources
-
+from django.contrib import admin
+import time
 
 class WaterObject(models.Model):
     title = models.CharField(verbose_name='Название', max_length=255)
@@ -17,6 +18,7 @@ class WaterObject(models.Model):
     description = models.CharField(max_length=255)
     slug = models.CharField(verbose_name='Транслит', max_length=200, blank=True)
     slug_name = models.CharField(verbose_name='Slug', max_length=200, blank=True)
+    geojson = models.FileField()
 
     def __unicode__(self):
         return self.title
@@ -24,6 +26,8 @@ class WaterObject(models.Model):
     def save(self):
         self.slug = '{0}-{1}'.format(self.pk, slugify(self.title))
         super(WaterObject, self).save()
+        super(WaterObject, self).save()
+        filename = self.geojson.url
 
     class Meta:
         verbose_name = 'Водные объекты'
@@ -62,6 +66,63 @@ class DataSource(models.Model):
     def __unicode__(self):
         return self.title
 
+class RasterData(models.Model):
+    title = models.CharField(verbose_name='Заголовок', max_length=200)
+    product_id = models.CharField(verbose_name='ID', max_length=200)
+    waterObject = models.ForeignKey(WaterObject)
+    date = models.DateTimeField(verbose_name='Time', max_length=255)
+
+    def __unicode__(self):
+        return self.title + '|' + self.waterObject.title
+
+    class Meta:
+        verbose_name = 'Загруженные данные'
+        verbose_name_plural = 'Загруженные данные'
+
+class Algorithm(models.Model):
+    title = models.CharField(verbose_name='Название', max_length=255)
+
+    def __unicode__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = 'Алгоритмы'
+        verbose_name_plural = 'Алгоритмы'
+
+STATUS_CHOICES = [
+    ('d', 'Draft'),
+    ('p', 'Published'),
+    ('w', 'Withdrawn'),
+]
+
+class Task(models.Model):
+    title = models.CharField(verbose_name='Название', max_length=255)
+    waterObject = models.ForeignKey(WaterObject, verbose_name='Водный объект', )
+    data = models.ForeignKey(RasterData, verbose_name='Данные', blank=True, null=True)
+    algorithm = models.ForeignKey(Algorithm, verbose_name='Алгоритм', )
+    time_from = models.DateTimeField(verbose_name='Время от', max_length=255, blank=True, null=True)
+    time_do = models.DateTimeField(verbose_name='Время до', max_length=255, blank=True, null=True)
+    status = models.CharField(max_length=1, choices=STATUS_CHOICES, blank=True, null=True)
+
+    class Meta:
+        verbose_name = 'Задачу'
+        verbose_name_plural = 'Задачи'
+
+class TaskAdmin(admin.ModelAdmin):
+    model = Task
+    list_display = ['title', 'status']
+    ordering = ['title', 'status']
+
+    actions = ['start']
+    def start(self, request, queryset):
+
+        rows_updated = queryset.update(status='p')
+        time.sleep(5)
+        if rows_updated == 1:
+            message_bit = "1 одна задача выполнена"
+        else:
+            message_bit = "%s задачи выполнены" % rows_updated
+        self.message_user(request, "%s готово." % message_bit)
 
 class Metering(models.Model):
     value = models.CharField(verbose_name='Значение', max_length=255)
@@ -114,19 +175,6 @@ class Article(models.Model):
         verbose_name = 'Новости'
         verbose_name_plural = 'Новости'
 
-
-class RasterData(models.Model):
-    title = models.CharField(verbose_name='Заголовок', max_length=200)
-    product_id = models.CharField(verbose_name='ID', max_length=200)
-    waterObject = models.ForeignKey(WaterObject)
-    date = models.DateTimeField(verbose_name='Time', max_length=255)
-
-    def __unicode__(self):
-        return self.title
-
-    class Meta:
-        verbose_name = 'Загруженные данные'
-        verbose_name_plural = 'Загруженные данные'
 
 class RasterLayer(models.Model):
     title = models.CharField(verbose_name='Заголовок', max_length=200)
