@@ -3,6 +3,8 @@ import os
 from celery import Celery
 
 # set the default Django settings module for the 'celery' program.
+from getData.Sentinel import getSentinelData
+
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'geoserver.settings')
 
 app = Celery('proj')
@@ -18,5 +20,7 @@ app.autodiscover_tasks()
 
 
 @app.task(bind=True)
-def debug_task(self):
+def debug_task1(self):
     print('Request: {0!r}'.format(self.request))
+
+

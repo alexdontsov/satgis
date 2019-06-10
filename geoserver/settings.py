@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'app.shapefiles',
     'app.tms',
     'import_export',
-    'raster',
+    # 'raster',
 
 ]
 
