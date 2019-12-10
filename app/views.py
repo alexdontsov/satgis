@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.http import JsonResponse
 from django.shortcuts import render, render_to_response, get_object_or_404
 from .models import WaterObject, Article, Metering, RasterLayer, Param
 from django.conf import settings
@@ -72,4 +73,18 @@ def all_articles(request):
 def one_article_by_slug(request, slug):
     article = get_object_or_404(Article, slug=slug)
     return render(request, 'article.html', {'article': article})
+
+
+def getParams(request, slug, param, data_at, data_to):
+    # water = get_object_or_404(WaterObject, id=slug)
+    # meterings = Metering.objects.select_related().filter(waterObject=article.id).order_by('-time')
+
+    data = {
+        'name': 'Vitor',
+        'location': 'Finland',
+        'is_active': True,
+        'count': 28
+    }
+
+    return JsonResponse(data)
 

@@ -8,3 +8,5 @@ sudo apt-get install build-essential libssl-dev libffi-dev python-dev
 # Полезные ссылки
 https://github.com/nextgis/nextgisweb_mapserver
 http://zevross.com/blog/2014/10/28/tips-for-creating-leafleft-js-maps/
+
+python manage.py createsuperuser
