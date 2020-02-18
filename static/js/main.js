@@ -1,15 +1,35 @@
 var trace1 = {
-  x: [1, 2, 3, 4],
-  y: [10, 15, 13, 17],
+  x: dataChartX,
+  y: dataChartY,
   type: 'scatter'
 };
 
-var trace2 = {
-  x: [1, 2, 3, 4],
-  y: [16, 5, 11, 9],
-  type: 'scatter'
-};
+console.log(trace1)
 
-var data = [trace1, trace2];
+let layout = {
+        title: "Площадь",
+        font: { size: 19 },
+        width: 800,
+        height: 450,
+        xaxis: {
+            autorange: true,
+            type: 'time',
+            title: 'time',
+            showgrid: true,
+            showline: true,
+            tickformat: '%Y-%m-%d %H:%M',
 
-Plotly.newPlot('chart1', data);
+        },
+        yaxis: {
+            autorange: true,
+            type: 'linear',
+            title: '',
+            showgrid: true,
+            showline: true,
+            automargin: true,
+        }
+    };
+
+var data = [trace1];
+
+Plotly.newPlot('chart1', data, layout, {responsive: true, displaylogo: false});

@@ -332,3 +332,13 @@ footer.page-footer .footer-copyright {
     overflow: hidden;
     background-color:#fff;
 }
+
+#chart1 {
+    margin: 90px auto  0 auto;
+    display:block;
+
+}
+
+.js-plotly-plot .plotly, .js-plotly-plot .plotly div {
+    margin:0 auto;
+}

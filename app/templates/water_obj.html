@@ -14,7 +14,6 @@
             <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab"
                aria-controls="nav-profile" aria-selected="false">
                 Натурные данные & АПИК</a>
-
         </div>
     </nav>
     <div class="tab-content" id="nav-tabContent" style="width:100%">
@@ -107,35 +106,11 @@
                     </div>
 
                 </form>
-
-
             </div>
-
-            <div id="chart1"></div>
-
-
             <div class="table-responsive">
                 {% if chart_display %}
-                <style>
-        canvas {
-            -moz-user-select: none;
-            -webkit-user-select: none;
-            -ms-user-select: none;
-        }
-
-                </style>
-
-                <div style="width:95%;">
-
-                    <!--chart wrapper-->
-                    <canvas id="canvas"></canvas>
-
-
-                </div>
+                <div id="chart1"></div>
                 {% endif %}
-
-
-
                 <table class="table">
                     <thead>
                     <tr>
@@ -238,6 +213,7 @@
     }
 
 
+
 </script>
 
 <script>
@@ -252,6 +228,7 @@
 
         ]
     };
+
 
 </script>
 <script type="text/javascript">
@@ -309,70 +286,26 @@ function getRandomColor() {
 });
 
 
+
 </script>
 {% if chart_display %}
 <script>
-    var dataChart = [
+
+    let dataChartX = [
         {% for metering in meterings %}
-             {
-                x: new Date("{{ metering.time|date:'Y-m-d H:i:s' }}"), y: {{ metering.value }}
-             },
-        {% endfor %}
-    ];
+             new Date("{{ metering.time|date:'Y-m-d H:i:s' }}"),
+        {% endfor %}];
+
+
+    let dataChartY = [
+        {% for metering in meterings %}
+            {{ metering.value }}
+        {% endfor %}];
+
+
 
 </script>
 
-<script>
-    var timeFormat = 'MMM D, h:mm A';
-    var config = {
-        type:    'line',
-        data:    {
-            datasets: [
-                {
-                    label: "{{ chart_param }}",
-                    data: dataChart,
-                    fill: false,
-                    borderColor: 'red'
-                }
-
-            ]
-        },
-        options: {
-            responsive: true,
-            title:      {
-                display: true,
-                text:    "{{ chart_title }}"
-            },
-            scales:     {
-                xAxes: [{
-                    type:       "time",
-                    time:       {
-                        format: timeFormat,
-                        tooltipFormat: 'll',
-
-                    },
-                    scaleLabel: {
-                        display:     true,
-                        labelString: 'Дата'
-                    }
-                }],
-                yAxes: [{
-                    scaleLabel: {
-                        display:     true,
-                        labelString: 'Значение'
-                    }
-                }]
-            }
-        }
-    };
-
-    window.onload = function () {
-        var ctx       = document.getElementById("canvas").getContext("2d");
-        window.myLine = new Chart(ctx, config);
-    };
-
-
-</script>
 {% endif %}
 {% endblock %}
 
