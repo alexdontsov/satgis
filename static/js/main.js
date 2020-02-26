@@ -17,7 +17,7 @@ let layout = {
             title: 'time',
             showgrid: true,
             showline: true,
-            tickformat: '%Y-%m-%d %H:%M',
+            tickformat: 'yyyy-mm-dd',
 
         },
         yaxis: {
