@@ -7,8 +7,8 @@ var trace1 = {
 console.log(trace1)
 
 let layout = {
-        title: "Площадь",
-        font: { size: 19 },
+        title: chartParam,
+        font: { size: 14 },
         width: 800,
         height: 450,
         xaxis: {
