@@ -291,7 +291,7 @@ function getRandomColor() {
 {% if chart_display %}
 <script>
 
-    let chartParam = {{ chart_param }};
+    let chartParam = "{{ chart_param }}";
 
     let dataChartX = [
         {% for metering in meterings %}
