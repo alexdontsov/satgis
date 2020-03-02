@@ -1,7 +1,7 @@
 var trace1 = {
   x: dataChartX,
   y: dataChartY,
-  type: 'scatter'
+  type: 'spline'
 };
 
 console.log(trace1)
