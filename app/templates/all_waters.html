@@ -7,7 +7,9 @@
 
      <div class="card">
       <div class="card-body">
-        <h5 class="card-title"> <a href="/waterobjects/{{ art.id }}">{{ art.title }}</a></h5>
+        <h5 class="card-title">
+            <img src="{{ art.image.url }}" class="img-thumbnail rounded float-left water-obj-preview">
+            <a href="/waterobjects/{{ art.id }}">{{ art.title }}</a></h5>
         <p class="card-text"> {{ art.text }}</p>
         <a  href="/waterobjects/{{ art.id }}" class="btn btn-primary podr">подробнее...</a>
       </div>

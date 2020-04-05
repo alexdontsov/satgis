@@ -342,3 +342,9 @@ footer.page-footer .footer-copyright {
 .js-plotly-plot .plotly, .js-plotly-plot .plotly div {
     margin:0 auto;
 }
+
+.water-obj-preview {
+    max-width: 200px;
+    margin-right: 20px;
+
+}

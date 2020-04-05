@@ -138,14 +138,16 @@ USE_TZ = True
 DATETIME_FORMAT = '%d-%m-%Y %H:%M:%S'
 
 STATIC_URL = '/static/'
+MEDIA_URL = '/media/'
 
 STATIC_ROOT = BASE_DIR + "/collected_static/" #
 MEDIA_ROOT = BASE_DIR + "/media/" #
 STATICFILES_DIRS = (
     BASE_DIR + "/static/", #тут нужно указывать путти к css и js, которые не в папках static приложений,
+    MEDIA_ROOT,
 )
 
-MEDIA_URL = '/media/'
+
 LOCALE_PATHS = (
     os.path.join(BASE_DIR, 'locale'),
 )

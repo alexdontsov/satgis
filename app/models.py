@@ -11,14 +11,15 @@ class WaterObject(models.Model):
     title = models.CharField(verbose_name='Название', max_length=255)
     lat = models.CharField(max_length=255)
     long = models.CharField(max_length=255)
-    x1 = models.CharField(max_length=255)
-    y1 = models.CharField(max_length=255)
-    x2 = models.CharField(max_length=255)
-    y2 = models.CharField(max_length=255)
+    x1 = models.CharField(max_length=255, blank = True)
+    y1 = models.CharField(max_length=255, blank = True)
+    x2 = models.CharField(max_length=255, blank = True)
+    y2 = models.CharField(max_length=255, blank = True)
     description = models.CharField(max_length=255)
     slug = models.CharField(verbose_name='Транслит', max_length=200, blank=True)
     slug_name = models.CharField(verbose_name='Slug', max_length=200, blank=True)
-    geojson = models.FileField()
+    geojson = models.FileField(blank = True)
+    image = models.ImageField(upload_to='waterobj/%Y/%m/%d')
 
     def __unicode__(self):
         return self.title
