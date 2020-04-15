@@ -192,12 +192,25 @@
 
 	var layers = {};
 
-	var layerGroup = L.layerGroup().addTo(mymap)
+	var layerGroup = L.layerGroup().addTo(mymap);
+
+	let vectorMaps = ['vector', 'vector-bl', 'vector-green', 'vector-red', 'vector-ye'];
+
+	function getRandomInt(max) {
+        return Math.floor(Math.random() * Math.floor(max));
+    }
 
 	function addLayerToMap(layerId, format, color) {
 
+	    let mapColor = format;
+	    if(format === 'vector') {
+	        let randomColor = getRandomInt(4);
+	        mapColor = vectorMaps[randomColor];
+
+	    }
+
 	    //var url = '/cgi-bin/mapserv?map={{ project_path }}/static/maps/'+format+'.map&ctype={{ project_path }}/rasters/'+layerId + '&color_pol='+ color;
-	    var url = '/cgi-bin/mapserv?map={{ project_path }}/static/maps/'+format+'.map&ctype={{ project_path }}/rasters/'+layerId;
+	    var url = '/cgi-bin/mapserv?map={{ project_path }}/static/maps/'+mapColor+'.map&ctype={{ project_path }}/rasters/'+layerId;
 
 	    var layer = L.tileLayer.wms(url, {
 		    maxZoom: 18,

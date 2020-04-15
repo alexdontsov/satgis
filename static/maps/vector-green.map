@@ -54,7 +54,7 @@ TRANSPARENT   ON
     CLASS
       STYLE
         #COLOR '%cpol%'
-        COLOR 230 34 80
+        COLOR 50 217 105
         #STYLEITEM "javascript://style.js"
         OUTLINECOLOR 0 0 0
       END
