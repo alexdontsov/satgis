@@ -1,5 +1,5 @@
 datetime
-Django==1.11
+Django==2.2.24
 psycopg2
 pandas
 werkzeug
